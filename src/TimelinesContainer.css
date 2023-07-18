@@ -1,0 +1,48 @@
+/* TimelinesContainer.css */
+
+.timelines-container {
+  overflow-x: auto;
+}
+
+.timelines-wrapper {
+  display: flex;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 300px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.timeline h2 {
+  margin-top: 0;
+}
+
+.timeline-entries {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  max-height: 500px;
+  scroll-behavior: smooth; /* Add smooth scrolling behavior */
+}
+
+.timeline-entry {
+  margin-bottom: 10px;
+  transition: background-color 0.3s;
+}
+
+.timeline-entry:hover {
+  background-color: #f0f0f0;
+}
+
+.entry-input {
+  display: flex;
+}
+
+.entry-input input {
+  flex: 1;
+  margin-right: 10px;
+}
