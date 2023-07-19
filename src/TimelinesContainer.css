@@ -36,7 +36,8 @@
   overflow-y: auto;
   margin-bottom: 10px;
   max-height: 500px;
-  scroll-behavior: smooth; /* Add smooth scrolling behavior */
+  /* Add smooth scrolling behavior */
+  /* scroll-behavior: smooth; */
 }
 
 .timeline-entry {
