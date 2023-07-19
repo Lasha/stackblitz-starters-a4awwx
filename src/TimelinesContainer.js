@@ -27,6 +27,17 @@ const simulateLoadOlderEntries = (timeout) =>
     }, timeout);
   });
 
+const formatTimestamp = (timestamp) => {
+  return new Date(timestamp).toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+  });
+};
+
 const TimelinesContainer = () => {
   const timelineCount = 10; // Number of timelines
   const [loading, setLoading] = useState(true);
@@ -176,7 +187,7 @@ const Timeline = ({ title, entries }) => {
         {timelineEntries.map((entry) => (
           <div key={entry.id} className="timeline-entry">
             <p>{entry.content}</p>
-            {showTimestamp && <small>{entry.timestamp}</small>}
+            {showTimestamp && <small>{formatTimestamp(entry.timestamp)}</small>}
           </div>
         ))}
       </div>
