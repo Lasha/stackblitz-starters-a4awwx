@@ -21,6 +21,16 @@
   margin-top: 0;
 }
 
+.timeline-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.timeline-actions label {
+  margin-right: 10px;
+}
+
 .timeline-entries {
   flex: 1;
   overflow-y: auto;
@@ -32,10 +42,15 @@
 .timeline-entry {
   margin-bottom: 10px;
   transition: background-color 0.3s;
+  padding: 10px;
 }
 
 .timeline-entry:hover {
   background-color: #f0f0f0;
+}
+
+.timeline-entry p {
+  margin: 0 0 5px;
 }
 
 .entry-input {

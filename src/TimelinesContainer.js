@@ -20,21 +20,11 @@ const TimelinesContainer = () => {
   const [loading, setLoading] = useState(true);
   const [timelines, setTimelines] = useState([]);
 
-  // const timelines = Array.from({ length: timelineCount }, (_, index) => ({
-  //   id: index + 1,
-  //   title: `Timeline ${index + 1}`,
-  //   entries: Array.from({ length: 20 }, (_, entryIndex) => ({
-  //     id: entryIndex + 1,
-  //     content: `Entry ${entryIndex + 1}`,
-  //     timestamp: new Date().toString(),
-  //   })),
-  // }));
-
   useEffect(() => {
     const fetchData = async () => {
       const timelinesData = [];
       for (let i = 1; i <= timelineCount; i++) {
-        const entries = await simulateAPICall(1000); // Simulate a delay of 1 second for each timeline
+        const entries = await simulateAPICall(100); // Simulate a delay of 1 second for each timeline
         timelinesData.push({
           id: i,
           title: `Timeline ${i}`,
@@ -69,6 +59,8 @@ const TimelinesContainer = () => {
 
 const Timeline = ({ title, entries }) => {
   const [timelineEntries, setTimelineEntries] = useState(entries);
+  const [loading, setLoading] = useState(false);
+  const [showTimestamp, setShowTimestamp] = useState(true);
 
   const timelineRef = useRef(null);
 
@@ -97,14 +89,43 @@ const Timeline = ({ title, entries }) => {
     }
   };
 
+  const handleRefresh = async () => {
+    setLoading(true);
+    try {
+      const refreshedEntries = await simulateAPICall(1000);
+      setTimelineEntries(refreshedEntries);
+    } catch (error) {
+      console.error('Error refreshing data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleToggleTimestamp = () => {
+    setShowTimestamp((prevShowTimestamp) => !prevShowTimestamp);
+  };
+
   return (
     <div className="timeline">
       <h2>{title}</h2>
+      <div className="timeline-actions">
+        <label>
+          <input
+            type="checkbox"
+            checked={showTimestamp}
+            onChange={handleToggleTimestamp}
+          />
+          Show Timestamp
+        </label>
+        <button onClick={handleRefresh} disabled={loading}>
+          Refresh
+        </button>
+      </div>
       <div className="timeline-entries" ref={timelineRef}>
         {timelineEntries.map((entry) => (
           <div key={entry.id} className="timeline-entry">
             <p>{entry.content}</p>
-            <small>{entry.timestamp}</small>
+            {showTimestamp && <small>{entry.timestamp}</small>}
           </div>
         ))}
       </div>
@@ -112,6 +133,7 @@ const Timeline = ({ title, entries }) => {
         <input type="text" name="entry" placeholder="Add an entry" />
         <button type="submit">Add</button>
       </form>
+      {loading && <p>Loading...</p>}
     </div>
   );
 };
