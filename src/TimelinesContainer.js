@@ -169,7 +169,10 @@ const Timeline = ({ title, entries }) => {
 
   return (
     <div className="timeline">
-      <h2>{title}</h2>
+      <div className="timeline-header">
+        <h2>{title}</h2>
+        {loading && <p>Loading...</p>}
+      </div>
       <div className="timeline-actions">
         <label>
           <input
@@ -195,7 +198,6 @@ const Timeline = ({ title, entries }) => {
         <input type="text" name="entry" placeholder="Add an entry" />
         <button type="submit">Add</button>
       </form>
-      {loading && <p>Loading...</p>}
     </div>
   );
 };

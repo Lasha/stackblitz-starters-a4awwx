@@ -17,8 +17,16 @@
   margin-right: 10px;
 }
 
-.timeline h2 {
-  margin-top: 0;
+.timeline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0 10px;
+}
+
+.timeline-header h2,
+.timeline-header p {
+  margin: 0;
 }
 
 .timeline-actions {
