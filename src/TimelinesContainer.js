@@ -171,7 +171,7 @@ const Timeline = ({ title, entries }) => {
     <div className="timeline">
       <div className="timeline-header">
         <h2>{title}</h2>
-        {!loading && <div className="timeline-loader"></div>}
+        {loading && <div className="timeline-loader"></div>}
       </div>
       <div className="timeline-actions">
         <label>
