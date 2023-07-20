@@ -238,6 +238,10 @@ const Timeline = ({ title, entries }) => {
     }, 1000);
   };
 
+  const handleCancelEditTitle = () => {
+    setEditingTitle(false);
+  };
+
   return (
     <div className="timeline">
       <div className="timeline-header">
@@ -251,6 +255,9 @@ const Timeline = ({ title, entries }) => {
             />
             <button onClick={handleSaveTitle} disabled={loading}>
               Save
+            </button>
+            <button onClick={() => handleCancelEditTitle()} disabled={loading}>
+              Cancel
             </button>
           </div>
         ) : (
