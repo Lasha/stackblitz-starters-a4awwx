@@ -85,6 +85,7 @@ const Timeline = ({ title, entries }) => {
   const [loading, setLoading] = useState(false);
   const [showTimestamp, setShowTimestamp] = useState(true);
   const [newEntriesLoaded, setNewEntriesLoaded] = useState(false);
+  const [shouldScrollToBottom, setShouldScrollToBottom] = useState(true);
 
   const timelineRef = useRef(null);
   const prevScrollHeightRef = useRef(0);
@@ -121,6 +122,8 @@ const Timeline = ({ title, entries }) => {
     const input = event.target.elements.entry;
     const content = input.value.trim();
     if (content !== '') {
+      setShouldScrollToBottom(true);
+
       const newEntry = {
         id: Date.now(),
         content,
@@ -132,7 +135,7 @@ const Timeline = ({ title, entries }) => {
   };
 
   const scrollToBottom = () => {
-    if (timelineRef.current) {
+    if (timelineRef.current && shouldScrollToBottom) {
       timelineRef.current.scrollTop = timelineRef.current.scrollHeight;
     }
   };
@@ -167,6 +170,40 @@ const Timeline = ({ title, entries }) => {
     }
   };
 
+  const handleEditEntry = (entryId) => {
+    setShouldScrollToBottom(false);
+    setTimelineEntries((prevEntries) =>
+      prevEntries.map((entry) =>
+        entry.id === entryId ? { ...entry, editable: true } : entry
+      )
+    );
+  };
+
+  const handleSaveEntry = async (entryId) => {
+    setLoading(true);
+    try {
+      // Simulate API call with a 1-second delay
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const updatedEntries = timelineEntries.map((entry) =>
+        entry.id === entryId ? { ...entry, editable: false } : entry
+      );
+      setTimelineEntries(updatedEntries);
+      setShouldScrollToBottom(false);
+    } catch (error) {
+      console.error('Error saving entry:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEntryChange = (entryId, newContent) => {
+    setTimelineEntries((prevEntries) =>
+      prevEntries.map((entry) =>
+        entry.id === entryId ? { ...entry, content: newContent } : entry
+      )
+    );
+  };
+
   return (
     <div className="timeline">
       <div className="timeline-header">
@@ -189,8 +226,38 @@ const Timeline = ({ title, entries }) => {
       <div className="timeline-entries" ref={timelineRef}>
         {timelineEntries.map((entry) => (
           <div key={entry.id} className="timeline-entry">
-            <p>{entry.content}</p>
-            {showTimestamp && <small>{formatTimestamp(entry.timestamp)}</small>}
+            {entry.editable ? (
+              <div>
+                <textarea
+                  value={entry.content}
+                  onChange={(e) => handleEntryChange(entry.id, e.target.value)}
+                  disabled={loading}
+                />
+                <div className="entry-buttons">
+                  <button
+                    onClick={() => handleSaveEntry(entry.id)}
+                    disabled={loading}
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <p>{entry.content}</p>
+                {showTimestamp && (
+                  <small>{formatTimestamp(entry.timestamp)}</small>
+                )}
+                <div className="entry-buttons">
+                  <button
+                    onClick={() => handleEditEntry(entry.id)}
+                    disabled={loading}
+                  >
+                    Edit
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         ))}
       </div>
