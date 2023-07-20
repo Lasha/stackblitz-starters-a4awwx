@@ -199,7 +199,9 @@ const Timeline = ({ title, entries }) => {
   const handleEntryChange = (entryId, newContent) => {
     setTimelineEntries((prevEntries) =>
       prevEntries.map((entry) =>
-        entry.id === entryId ? { ...entry, content: newContent } : entry
+        entry.id === entryId
+          ? { ...entry, content: newContent, timestamp: new Date().toString() }
+          : entry
       )
     );
   };
