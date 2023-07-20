@@ -82,11 +82,14 @@ const TimelinesContainer = () => {
 };
 
 const Timeline = ({ title, entries }) => {
+  const [timelineTitle, setTimelineTitle] = useState(title);
   const [timelineEntries, setTimelineEntries] = useState(entries);
   const [loading, setLoading] = useState(false);
   const [showTimestamp, setShowTimestamp] = useState(true);
   const [newEntriesLoaded, setNewEntriesLoaded] = useState(false);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(true);
+  const [editingTitle, setEditingTitle] = useState(false);
+  const [newTitle, setNewTitle] = useState(title);
 
   const timelineRef = useRef(null);
   const prevScrollHeightRef = useRef(0);
@@ -216,10 +219,43 @@ const Timeline = ({ title, entries }) => {
     );
   };
 
+  const handleTitleChange = (e) => {
+    setNewTitle(e.target.value);
+  };
+
+  const handleEditTitle = () => {
+    setEditingTitle(true);
+  };
+
+  const handleSaveTitle = () => {
+    setLoading(true);
+    // Simulate API call with a 1-second delay
+    setTimeout(() => {
+      // Update the title with the new value
+      setTimelineTitle(newTitle);
+      setEditingTitle(false);
+      setLoading(false);
+    }, 1000);
+  };
+
   return (
     <div className="timeline">
       <div className="timeline-header">
-        <h2>{title}</h2>
+        {editingTitle ? (
+          <div>
+            <input
+              type="text"
+              value={newTitle}
+              onChange={handleTitleChange}
+              disabled={loading}
+            />
+            <button onClick={handleSaveTitle} disabled={loading}>
+              Save
+            </button>
+          </div>
+        ) : (
+          <h2 onClick={handleEditTitle}>{timelineTitle}</h2>
+        )}
         {loading && <div className="timeline-loader"></div>}
       </div>
       <div className="timeline-actions">

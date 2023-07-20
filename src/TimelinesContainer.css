@@ -58,7 +58,7 @@
 }
 
 .timeline-entries {
-  flex: 1;
+  flex: 1 0 100%;
   overflow-y: auto;
   margin-bottom: 10px;
   max-height: 500px;
@@ -88,6 +88,7 @@
 .entry-input {
   display: flex;
   gap: 10px;
+  flex: 1;
 }
 
 .entry-input textarea {
