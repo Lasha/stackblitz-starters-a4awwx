@@ -1,6 +1,7 @@
 // TimelinesContainer.js
 
 import React, { useEffect, useRef, useState } from 'react';
+import DOMPurify from 'dompurify';
 import './TimelinesContainer.css'; // Import the CSS file for TimelinesContainer
 
 const simulateAPICall = (timeout) =>
@@ -119,8 +120,8 @@ const Timeline = ({ title, entries }) => {
 
   const addEntry = (event) => {
     event.preventDefault();
-    const input = event.target.elements.entry;
-    const content = input.value.trim();
+    const textarea = event.target.elements.entry;
+    const content = textarea.value.trim();
     if (content !== '') {
       setShouldScrollToBottom(true);
 
@@ -128,9 +129,10 @@ const Timeline = ({ title, entries }) => {
         id: Date.now(),
         content,
         timestamp: new Date().toString(),
+        editable: false,
       };
       setTimelineEntries((prevEntries) => [...prevEntries, newEntry]);
-      input.value = '';
+      textarea.value = '';
     }
   };
 
@@ -237,7 +239,7 @@ const Timeline = ({ title, entries }) => {
         {timelineEntries.map((entry) => (
           <div key={entry.id} className="timeline-entry">
             {entry.editable ? (
-              <div>
+              <>
                 <textarea
                   value={entry.content}
                   onChange={(e) => handleEntryChange(entry.id, e.target.value)}
@@ -257,10 +259,16 @@ const Timeline = ({ title, entries }) => {
                     Cancel
                   </button>
                 </div>
-              </div>
+              </>
             ) : (
-              <div>
-                <p>{entry.content}</p>
+              <>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(
+                      entry.content.replace(/\n/g, '<br />')
+                    ),
+                  }}
+                ></div>
                 {showTimestamp && (
                   <small>{formatTimestamp(entry.timestamp)}</small>
                 )}
@@ -272,13 +280,13 @@ const Timeline = ({ title, entries }) => {
                     Edit
                   </button>
                 </div>
-              </div>
+              </>
             )}
           </div>
         ))}
       </div>
       <form className="entry-input" onSubmit={addEntry}>
-        <input type="text" name="entry" placeholder="Add an entry" />
+        <textarea name="entry" placeholder="Add an entry..." />
         <button type="submit">Add</button>
       </form>
     </div>
