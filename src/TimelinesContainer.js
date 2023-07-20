@@ -198,6 +198,14 @@ const Timeline = ({ title, entries }) => {
     }
   };
 
+  const handleCancelEdit = (entryId) => {
+    setTimelineEntries((prevEntries) =>
+      prevEntries.map((entry) =>
+        entry.id === entryId ? { ...entry, editable: false } : entry
+      )
+    );
+  };
+
   const handleEntryChange = (entryId, newContent) => {
     setTimelineEntries((prevEntries) =>
       prevEntries.map((entry) =>
@@ -241,6 +249,12 @@ const Timeline = ({ title, entries }) => {
                     disabled={loading}
                   >
                     Save
+                  </button>
+                  <button
+                    onClick={() => handleCancelEdit(entry.id)}
+                    disabled={loading}
+                  >
+                    Cancel
                   </button>
                 </div>
               </div>
