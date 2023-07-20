@@ -185,7 +185,9 @@ const Timeline = ({ title, entries }) => {
       // Simulate API call with a 1-second delay
       await new Promise((resolve) => setTimeout(resolve, 1000));
       const updatedEntries = timelineEntries.map((entry) =>
-        entry.id === entryId ? { ...entry, editable: false } : entry
+        entry.id === entryId
+          ? { ...entry, editable: false, timestamp: new Date().toString() }
+          : entry
       );
       setTimelineEntries(updatedEntries);
       setShouldScrollToBottom(false);
@@ -199,9 +201,7 @@ const Timeline = ({ title, entries }) => {
   const handleEntryChange = (entryId, newContent) => {
     setTimelineEntries((prevEntries) =>
       prevEntries.map((entry) =>
-        entry.id === entryId
-          ? { ...entry, content: newContent, timestamp: new Date().toString() }
-          : entry
+        entry.id === entryId ? { ...entry, content: newContent } : entry
       )
     );
   };
