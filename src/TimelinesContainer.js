@@ -244,39 +244,44 @@ const Timeline = ({ title, entries }) => {
 
   return (
     <div className="timeline">
-      <div className="timeline-header">
-        {editingTitle ? (
-          <div>
+      <div className="timeline-header-container">
+        <div className="timeline-header">
+          {editingTitle ? (
+            <div>
+              <input
+                type="text"
+                value={newTitle}
+                onChange={handleTitleChange}
+                disabled={loading}
+              />
+              <button onClick={handleSaveTitle} disabled={loading}>
+                Save
+              </button>
+              <button
+                onClick={() => handleCancelEditTitle()}
+                disabled={loading}
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <h2 onClick={handleEditTitle}>{timelineTitle}</h2>
+          )}
+          {loading && <div className="timeline-loader"></div>}
+        </div>
+        <div className="timeline-actions">
+          <label>
             <input
-              type="text"
-              value={newTitle}
-              onChange={handleTitleChange}
-              disabled={loading}
+              type="checkbox"
+              checked={showTimestamp}
+              onChange={handleToggleTimestamp}
             />
-            <button onClick={handleSaveTitle} disabled={loading}>
-              Save
-            </button>
-            <button onClick={() => handleCancelEditTitle()} disabled={loading}>
-              Cancel
-            </button>
-          </div>
-        ) : (
-          <h2 onClick={handleEditTitle}>{timelineTitle}</h2>
-        )}
-        {loading && <div className="timeline-loader"></div>}
-      </div>
-      <div className="timeline-actions">
-        <label>
-          <input
-            type="checkbox"
-            checked={showTimestamp}
-            onChange={handleToggleTimestamp}
-          />
-          Show Timestamp
-        </label>
-        <button onClick={handleRefresh} disabled={loading}>
-          Refresh
-        </button>
+            Show Timestamp
+          </label>
+          <button onClick={handleRefresh} disabled={loading}>
+            Refresh
+          </button>
+        </div>
       </div>
       <div className="timeline-entries" ref={timelineRef}>
         {timelineEntries.map((entry) => (
