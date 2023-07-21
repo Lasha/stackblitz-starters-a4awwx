@@ -86,6 +86,7 @@ const Timeline = ({ title, entries }) => {
   const [timelineEntries, setTimelineEntries] = useState(entries);
   const [loading, setLoading] = useState(false);
   const [showTimestamp, setShowTimestamp] = useState(true);
+  const [showEditOptions, setShowEditOptions] = useState(true);
   const [newEntriesLoaded, setNewEntriesLoaded] = useState(false);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(true);
   const [editingTitle, setEditingTitle] = useState(false);
@@ -160,6 +161,10 @@ const Timeline = ({ title, entries }) => {
 
   const handleToggleTimestamp = () => {
     setShowTimestamp((prevShowTimestamp) => !prevShowTimestamp);
+  };
+
+  const handleToggleEditOptions = () => {
+    setShowEditOptions((prevShowEditOptions) => !prevShowEditOptions);
   };
 
   const loadOlderPosts = async () => {
@@ -278,6 +283,14 @@ const Timeline = ({ title, entries }) => {
             />
             Show Timestamp
           </label>
+          <label>
+            <input
+              type="checkbox"
+              checked={showEditOptions}
+              onChange={handleToggleEditOptions}
+            />
+            Show Edit Options
+          </label>
           <button onClick={handleRefresh} disabled={loading}>
             Refresh
           </button>
@@ -320,14 +333,16 @@ const Timeline = ({ title, entries }) => {
                 {showTimestamp && (
                   <small>{formatTimestamp(entry.timestamp)}</small>
                 )}
-                <div className="entry-buttons">
-                  <button
-                    onClick={() => handleEditEntry(entry.id)}
-                    disabled={loading}
-                  >
-                    Edit
-                  </button>
-                </div>
+                {showEditOptions && (
+                  <div className="entry-buttons">
+                    <button
+                      onClick={() => handleEditEntry(entry.id)}
+                      disabled={loading}
+                    >
+                      Edit
+                    </button>
+                  </div>
+                )}
               </>
             )}
           </div>
