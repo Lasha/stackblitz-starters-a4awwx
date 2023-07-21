@@ -301,6 +301,7 @@ const Timeline = ({ title, entries }) => {
       <div className="timeline-entries" ref={timelineRef}>
         {timelineEntries.map((entry) => (
           <div key={entry.id} className="timeline-entry">
+            <div className="bullet-point"></div>
             {entry.editable ? (
               <>
                 <textarea

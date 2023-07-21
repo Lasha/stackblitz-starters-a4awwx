@@ -85,6 +85,29 @@
   transition: background-color 0.3s;
   padding: 10px;
   border-bottom: 1px solid #f0f0f0;
+  position: relative; /* To position the bullet point and the connecting line */
+  padding-left: 30px; /* Add some space for the bullet point and connecting line */
+}
+.timeline-entry::before {
+  content: '';
+  position: absolute;
+  top: 0; /* Adjust the positioning based on your design preference */
+  left: 10px; /* Adjust the positioning based on your design preference */
+  width: 2px;
+  height: calc(100%); /* Calculate the height of the connecting line */
+  background-color: #888; /* Use the same color as the bullet point */
+  opacity: 0.2;
+}
+
+.bullet-point {
+  position: absolute;
+  top: 50%;
+  left: 11px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #888;
+  transform: translate(-50%, -50%); /* Move the bullet-point to the center */
 }
 
 .timeline-entry:hover {
