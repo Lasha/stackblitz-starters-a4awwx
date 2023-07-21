@@ -275,22 +275,24 @@ const Timeline = ({ title, entries }) => {
           {loading && <div className="timeline-loader"></div>}
         </div>
         <div className="timeline-actions">
-          <label>
-            <input
-              type="checkbox"
-              checked={showTimestamp}
-              onChange={handleToggleTimestamp}
-            />
-            Show Timestamp
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={showEditOptions}
-              onChange={handleToggleEditOptions}
-            />
-            Show Edit Options
-          </label>
+          <div className="timeline-toggle-options">
+            <label>
+              <input
+                type="checkbox"
+                checked={showTimestamp}
+                onChange={handleToggleTimestamp}
+              />
+              Show Timestamp
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={showEditOptions}
+                onChange={handleToggleEditOptions}
+              />
+              Show Edit Options
+            </label>
+          </div>
           <button onClick={handleRefresh} disabled={loading}>
             Refresh
           </button>
