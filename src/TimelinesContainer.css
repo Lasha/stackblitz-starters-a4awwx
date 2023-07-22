@@ -84,7 +84,16 @@
   margin-bottom: 0;
   transition: background-color 0.3s;
   padding: 10px;
-  border-bottom: 1px solid #f0f0f0;
+  /* border-bottom: 1px solid #f0f0f0; */
+  border-image: linear-gradient(
+      to left,
+      rgba(240, 240, 240, 1),
+      rgba(240, 240, 240, 0)
+    )
+    30;
+  border-width: 0 0 2px;
+  border-style: solid;
+  margin-top: -2px;
   position: relative; /* To position the bullet point and the connecting line */
   padding-left: 30px; /* Add some space for the bullet point and connecting line */
 }
