@@ -2,15 +2,17 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import DOMPurify from 'dompurify';
+import { v4 as uuidv4 } from 'uuid';
 import './TimelinesContainer.css'; // Import the CSS file for TimelinesContainer
 
 const simulateAPICall = (timeout) =>
   new Promise((resolve) => {
     setTimeout(() => {
       const entries = Array.from({ length: 20 }, (_, entryIndex) => ({
-        id: entryIndex + 1,
+        id: uuidv4(), // Generate a unique ID for the entry
         content: `Entry ${entryIndex + 1}`,
         timestamp: new Date().toString(),
+        editable: false,
       }));
       resolve(entries);
     }, timeout);
@@ -20,9 +22,10 @@ const simulateLoadOlderEntries = (timeout) =>
   new Promise((resolve) => {
     setTimeout(() => {
       const entries = Array.from({ length: 5 }, (_, entryIndex) => ({
-        id: entryIndex,
+        id: uuidv4(), // Generate a unique ID for the entry
         content: `Older Entry ${entryIndex}`,
         timestamp: new Date().toString(),
+        editable: false,
       })).reverse();
       resolve(entries);
     }, timeout);
@@ -130,7 +133,8 @@ const Timeline = ({ title, entries }) => {
       setShouldScrollToBottom(true);
 
       const newEntry = {
-        id: Date.now(),
+        id: uuidv4(), // Generate a unique ID for the entry
+        // id: Date.now(),
         content,
         timestamp: new Date().toString(),
         editable: false,
@@ -247,6 +251,17 @@ const Timeline = ({ title, entries }) => {
     setEditingTitle(false);
   };
 
+  const handleDeleteEntry = (id) => {
+    const shouldDelete = window.confirm(
+      'Are you sure you want to delete this entry?'
+    );
+    if (shouldDelete) {
+      setTimelineEntries((prevEntries) =>
+        prevEntries.filter((entry) => entry.id !== id)
+      );
+    }
+  };
+
   return (
     <div className="timeline">
       <div className="timeline-header-container">
@@ -343,6 +358,12 @@ const Timeline = ({ title, entries }) => {
                       disabled={loading}
                     >
                       Edit
+                    </button>
+                    <button
+                      onClick={() => handleDeleteEntry(entry.id)}
+                      disabled={loading}
+                    >
+                      Delete
                     </button>
                   </div>
                 )}
