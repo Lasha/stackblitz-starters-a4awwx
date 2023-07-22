@@ -256,6 +256,7 @@ const Timeline = ({ title, entries }) => {
       'Are you sure you want to delete this entry?'
     );
     if (shouldDelete) {
+      setShouldScrollToBottom(false);
       setTimelineEntries((prevEntries) =>
         prevEntries.filter((entry) => entry.id !== id)
       );
