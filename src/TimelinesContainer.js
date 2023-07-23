@@ -13,6 +13,7 @@ const simulateAPICall = (timeout) =>
         content: `Entry ${entryIndex + 1}`,
         timestamp: new Date().toString(),
         editable: false,
+        highlighted: false, // Set "highlighted" to false for newly generated entries
       }));
       resolve(entries);
     }, timeout);
@@ -26,6 +27,7 @@ const simulateLoadOlderEntries = (timeout) =>
         content: `Older Entry ${entryIndex}`,
         timestamp: new Date().toString(),
         editable: false,
+        highlighted: false, // Set "highlighted" to false for newly generated entries
       })).reverse();
       resolve(entries);
     }, timeout);
@@ -138,6 +140,7 @@ const Timeline = ({ title, entries }) => {
         content,
         timestamp: new Date().toString(),
         editable: false,
+        highlighted: false, // Set "highlighted" to false for newly generated entries
       };
       setTimelineEntries((prevEntries) => [...prevEntries, newEntry]);
       textarea.value = '';
@@ -263,6 +266,17 @@ const Timeline = ({ title, entries }) => {
     }
   };
 
+  const handleBulletClick = (id) => {
+    setTimelineEntries((prevEntries) =>
+      prevEntries.map((entry) => {
+        if (entry.id === id) {
+          return { ...entry, highlighted: !entry.highlighted };
+        }
+        return entry;
+      })
+    );
+  };
+
   return (
     <div className="timeline">
       <div className="timeline-header-container">
@@ -316,8 +330,18 @@ const Timeline = ({ title, entries }) => {
       </div>
       <div className="timeline-entries" ref={timelineRef}>
         {timelineEntries.map((entry) => (
-          <div key={entry.id} className="timeline-entry">
-            <div className="bullet-point"></div>
+          <div
+            key={entry.id}
+            className={`timeline-entry${
+              entry.highlighted ? ' highlighted' : ''
+            }`}
+          >
+            <div
+              className={`bullet-point${
+                entry.highlighted ? ' highlighted' : ''
+              }`}
+              onClick={() => handleBulletClick(entry.id)}
+            ></div>
             {entry.editable ? (
               <>
                 <textarea

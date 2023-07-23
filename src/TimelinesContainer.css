@@ -108,7 +108,7 @@
   opacity: 0.2;
 }
 
-.bullet-point {
+.timeline-entry .bullet-point {
   position: absolute;
   top: 50%;
   left: 11px;
@@ -117,6 +117,12 @@
   border-radius: 50%;
   background-color: #999;
   transform: translate(-50%, -50%); /* Move the bullet-point to the center */
+  cursor: pointer; /* Add cursor pointer styling */
+}
+
+.timeline-entry.highlighted .bullet-point,
+.timeline-entry .bullet-point.highlighted {
+  background-color: gold; /* Change the bullet-point color to gold when highlighted */
 }
 
 .timeline-entry:hover {
