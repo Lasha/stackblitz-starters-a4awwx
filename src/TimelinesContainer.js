@@ -275,6 +275,7 @@ const Timeline = ({ title, entries }) => {
         return entry;
       })
     );
+    setShouldScrollToBottom(false); // Set to false when the bullet-point is clicked
   };
 
   return (
