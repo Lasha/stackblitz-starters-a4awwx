@@ -289,10 +289,10 @@ const Timeline = ({ title, entries }) => {
       id: uuidv4(),
       content: habit,
       timestamp: new Date().toString(),
-      editable: false, // Add the editable property
-      highlighted: false, // Add the highlighted property
+      editable: false,
+      highlighted: false,
     };
-    setTimelineEntries((prevEntries) => [newEntry, ...prevEntries]);
+    setTimelineEntries((prevEntries) => [...prevEntries, newEntry]); // Append new entry instead of prepending
     setShouldScrollToBottom(true); // Scroll to bottom when a new entry is added
   };
 
