@@ -165,7 +165,7 @@
 .habits {
   padding: 10px; /* Add padding instead of margin-top */
   display: flex; /* Use flexbox */
-  flex-wrap: wrap; /* Allow items to wrap to the next line if needed */
+  flex-direction: column; /* Use flex direction column to stack elements vertically */
   gap: 8px; /* Add 8px gap between .habit-item elements */
 }
 
