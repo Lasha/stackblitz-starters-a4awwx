@@ -192,3 +192,39 @@
 .habit-item:hover .habit-bullet-point {
   transform: scale(1.2); /* Scale the bullet-point when hovered */
 }
+
+.habit-item .habit-text {
+  font-size: 16px;
+}
+
+.habit-actions {
+  margin-left: auto;
+}
+
+.habit-actions button {
+  margin-left: 8px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  color: #555;
+  font-size: 14px;
+}
+
+.habit-actions button:hover {
+  color: #333;
+}
+
+.add-habit-button {
+  margin-top: 8px;
+  cursor: pointer;
+  background-color: #4caf50;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+.add-habit-button:hover {
+  background-color: #45a049;
+}

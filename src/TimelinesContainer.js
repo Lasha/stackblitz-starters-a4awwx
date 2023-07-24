@@ -96,15 +96,21 @@ const Timeline = ({ title, entries }) => {
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(true);
   const [editingTitle, setEditingTitle] = useState(false);
   const [newTitle, setNewTitle] = useState(title);
+  const [habits, setHabits] = useState([
+    'Exercise',
+    'Read',
+    'Meditate',
+    // Add more habits as needed
+  ]);
 
   const timelineRef = useRef(null);
   const prevScrollHeightRef = useRef(0);
 
-  const habits = [
-    'Drink 8 glasses of water',
-    'Take a 15-minute walk',
-    'Eat a piece of fruit',
-  ];
+  // const habits = [
+  //   'Drink 8 glasses of water',
+  //   'Take a 15-minute walk',
+  //   'Eat a piece of fruit',
+  // ];
 
   useEffect(() => {
     if (!newEntriesLoaded) {
@@ -296,6 +302,33 @@ const Timeline = ({ title, entries }) => {
     setShouldScrollToBottom(true); // Scroll to bottom when a new entry is added
   };
 
+  // Function to add a new habit
+  const handleAddHabit = () => {
+    const newHabit = prompt('Enter a new habit:');
+    if (newHabit) {
+      setHabits((prevHabits) => [...prevHabits, newHabit]);
+    }
+  };
+
+  // Function to edit a habit
+  const handleEditHabit = (habitIndex) => {
+    const updatedHabit = prompt('Edit the habit:', habits[habitIndex]);
+    if (updatedHabit) {
+      setHabits((prevHabits) =>
+        prevHabits.map((habit, index) =>
+          index === habitIndex ? updatedHabit : habit
+        )
+      );
+    }
+  };
+
+  // Function to delete a habit
+  const handleDeleteHabit = (habitIndex) => {
+    setHabits((prevHabits) =>
+      prevHabits.filter((_, index) => index !== habitIndex)
+    );
+  };
+
   return (
     <div className="timeline">
       <div className="timeline-header-container">
@@ -431,8 +464,15 @@ const Timeline = ({ title, entries }) => {
           >
             <span className="habit-bullet-point">+</span>
             <span className="habit-text">{habit}</span>
+            <div className="habit-actions">
+              <button onClick={() => handleEditHabit(index)}>Edit</button>
+              <button onClick={() => handleDeleteHabit(index)}>Delete</button>
+            </div>
           </div>
         ))}
+        <button className="add-habit-button" onClick={handleAddHabit}>
+          Add Habit
+        </button>
       </div>
     </div>
   );
