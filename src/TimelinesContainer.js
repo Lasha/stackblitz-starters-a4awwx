@@ -100,6 +100,12 @@ const Timeline = ({ title, entries }) => {
   const timelineRef = useRef(null);
   const prevScrollHeightRef = useRef(0);
 
+  const habits = [
+    'Drink 8 glasses of water',
+    'Take a 15-minute walk',
+    'Eat a piece of fruit',
+  ];
+
   useEffect(() => {
     if (!newEntriesLoaded) {
       scrollToBottom();
@@ -278,6 +284,18 @@ const Timeline = ({ title, entries }) => {
     setShouldScrollToBottom(false); // Set to false when the bullet-point is clicked
   };
 
+  const handleAddHabitEntry = (habit) => {
+    const newEntry = {
+      id: uuidv4(),
+      content: habit,
+      timestamp: new Date().toString(),
+      editable: false, // Add the editable property
+      highlighted: false, // Add the highlighted property
+    };
+    setTimelineEntries((prevEntries) => [newEntry, ...prevEntries]);
+    setShouldScrollToBottom(true); // Scroll to bottom when a new entry is added
+  };
+
   return (
     <div className="timeline">
       <div className="timeline-header-container">
@@ -398,10 +416,24 @@ const Timeline = ({ title, entries }) => {
           </div>
         ))}
       </div>
+
       <form className="entry-input" onSubmit={addEntry}>
         <textarea name="entry" placeholder="Add an entry..." />
         <button type="submit">Add</button>
       </form>
+
+      <div className="habits">
+        {habits.map((habit, index) => (
+          <div
+            key={index}
+            className="habit-item"
+            onClick={() => handleAddHabitEntry(habit)}
+          >
+            <span className="habit-bullet-point">+</span>
+            <span className="habit-text">{habit}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

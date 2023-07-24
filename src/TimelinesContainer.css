@@ -160,3 +160,33 @@
 .entry-input textarea {
   flex: 1;
 }
+
+/* Styles for habit bullet points */
+.habits {
+  margin-top: 20px;
+}
+
+.habit-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.habit-bullet-point {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #b4b4b4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 16px;
+  margin-right: 8px;
+  transition: transform 0.3s ease; /* Add a transition effect for the transform property */
+}
+
+.habit-item:hover .habit-bullet-point {
+  transform: scale(1.2); /* Scale the bullet-point when hovered */
+}
