@@ -118,6 +118,12 @@
   background-color: #999;
   transform: translate(-50%, -50%); /* Move the bullet-point to the center */
   cursor: pointer; /* Add cursor pointer styling */
+  transition: transform 0.3s ease; /* Add a transition effect for the transform property */
+  transform-origin: center; /* Set the transform origin to the center of the bullet-point */
+}
+
+.timeline-entry:hover .bullet-point {
+  transform: translate(-50%, -50%) scale(1.2); /* Scale and translate the bullet-point when hovered or highlighted */
 }
 
 .timeline-entry.highlighted .bullet-point,
