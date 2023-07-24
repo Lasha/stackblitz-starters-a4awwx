@@ -123,12 +123,13 @@
 }
 
 .timeline-entry:hover .bullet-point {
-  transform: translate(-50%, -50%) scale(1.2); /* Scale and translate the bullet-point when hovered or highlighted */
+  transform: translate(-50%, -50%) scale(1.3); /* Scale and translate the bullet-point when hovered or highlighted */
 }
 
 .timeline-entry.highlighted .bullet-point,
 .timeline-entry .bullet-point.highlighted {
   background-color: gold; /* Change the bullet-point color to gold when highlighted */
+  border: 1px solid #b4b4b4;
 }
 
 .timeline-entry:hover {
