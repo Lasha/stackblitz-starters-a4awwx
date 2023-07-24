@@ -457,17 +457,20 @@ const Timeline = ({ title, entries }) => {
 
       <div className="habits">
         {habits.map((habit, index) => (
-          <div
-            key={index}
-            className="habit-item"
-            onClick={() => handleAddHabitEntry(habit)}
-          >
-            <span className="habit-bullet-point">+</span>
+          <div key={index} className="habit-item">
+            <span
+              className="habit-bullet-point"
+              onClick={() => handleAddHabitEntry(habit)}
+            >
+              +
+            </span>
             <span className="habit-text">{habit}</span>
-            <div className="habit-actions">
-              <button onClick={() => handleEditHabit(index)}>Edit</button>
-              <button onClick={() => handleDeleteHabit(index)}>Delete</button>
-            </div>
+            {showEditOptions && (
+              <div className="habit-actions">
+                <button onClick={() => handleEditHabit(index)}>Edit</button>
+                <button onClick={() => handleDeleteHabit(index)}>Delete</button>
+              </div>
+            )}
           </div>
         ))}
         <button className="add-habit-button" onClick={handleAddHabit}>

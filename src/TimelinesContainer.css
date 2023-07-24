@@ -15,6 +15,7 @@
   border: 1px solid #ccc;
   padding: 0;
   margin-right: 10px;
+  max-width: 300px;
 }
 
 .timeline-header-container {
@@ -172,7 +173,6 @@
 .habit-item {
   display: flex;
   align-items: center;
-  cursor: pointer;
 }
 
 .habit-bullet-point {
@@ -187,6 +187,7 @@
   font-size: 16px;
   margin-right: 8px;
   transition: transform 0.3s ease; /* Add a transition effect for the transform property */
+  cursor: pointer; /* Keep cursor: pointer on habit-bullet-point */
 }
 
 .habit-item:hover .habit-bullet-point {
@@ -195,10 +196,16 @@
 
 .habit-item .habit-text {
   font-size: 16px;
+  flex: 1; /* Allow the text to take up remaining space */
+  white-space: nowrap; /* Prevent text from wrapping to multiple lines */
+  overflow: hidden; /* Hide any overflowed text */
+  text-overflow: ellipsis; /* Show ellipsis for truncated text */
 }
 
 .habit-actions {
-  margin-left: auto;
+  display: flex; /* Use flexbox to keep the actions on the same line */
+  align-items: center; /* Align items vertically */
+  margin-left: 8px; /* Add spacing between text and actions */
 }
 
 .habit-actions button {
