@@ -235,3 +235,18 @@
 .add-habit-button:hover {
   background-color: #45a049;
 }
+
+.habits-header {
+  cursor: pointer;
+  padding: 10px;
+  background-color: #f0f0f0;
+  font-size: 18px;
+  margin-top: 10px;
+  user-select: none; /* prevent the text selection on double click */
+  color: #333;
+  transition: color 0.3s;
+}
+
+.habits-header:hover {
+  color: #000;
+}

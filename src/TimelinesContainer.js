@@ -96,6 +96,7 @@ const Timeline = ({ title, entries }) => {
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(true);
   const [editingTitle, setEditingTitle] = useState(false);
   const [newTitle, setNewTitle] = useState(title);
+  const [habitsExpanded, setHabitsExpanded] = useState(true);
   const [habits, setHabits] = useState([
     'Exercise',
     'Read',
@@ -329,6 +330,11 @@ const Timeline = ({ title, entries }) => {
     );
   };
 
+  // Function to handle click on the habits header
+  const handleHabitsHeaderClick = () => {
+    setHabitsExpanded(!habitsExpanded);
+  };
+
   return (
     <div className="timeline">
       <div className="timeline-header-container">
@@ -455,27 +461,39 @@ const Timeline = ({ title, entries }) => {
         <button type="submit">Add</button>
       </form>
 
-      <div className="habits">
-        {habits.map((habit, index) => (
-          <div key={index} className="habit-item">
-            <span
-              className="habit-bullet-point"
-              onClick={() => handleAddHabitEntry(habit)}
-            >
-              +
-            </span>
-            <span className="habit-text">{habit}</span>
-            {showEditOptions && (
-              <div className="habit-actions">
-                <button onClick={() => handleEditHabit(index)}>Edit</button>
-                <button onClick={() => handleDeleteHabit(index)}>Delete</button>
-              </div>
+      <div className="habits-container">
+        <div className="habits-header" onClick={handleHabitsHeaderClick}>
+          Habits {habitsExpanded ? '▾' : '▸'}
+        </div>
+        {habitsExpanded && (
+          <div className="habits">
+            {!habits.length && (
+              <div className="habit-item">No habits! Add some?</div>
             )}
+            {habits.map((habit, index) => (
+              <div key={index} className="habit-item">
+                <span
+                  className="habit-bullet-point"
+                  onClick={() => handleAddHabitEntry(habit)}
+                >
+                  +
+                </span>
+                <span className="habit-text">{habit}</span>
+                {showEditOptions && (
+                  <div className="habit-actions">
+                    <button onClick={() => handleEditHabit(index)}>Edit</button>
+                    <button onClick={() => handleDeleteHabit(index)}>
+                      Delete
+                    </button>
+                  </div>
+                )}
+              </div>
+            ))}
+            <button className="add-habit-button" onClick={handleAddHabit}>
+              Add Habit
+            </button>
           </div>
-        ))}
-        <button className="add-habit-button" onClick={handleAddHabit}>
-          Add Habit
-        </button>
+        )}
       </div>
     </div>
   );
