@@ -45,7 +45,7 @@ const formatTimestamp = (timestamp) => {
 };
 
 const TimelinesContainer = () => {
-  const timelineCount = 10; // Number of timelines
+  const timelineCount = 5; // Number of timelines
   const [loading, setLoading] = useState(true);
   const [timelines, setTimelines] = useState([]);
 
