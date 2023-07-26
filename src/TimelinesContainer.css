@@ -121,6 +121,7 @@
   cursor: pointer; /* Add cursor pointer styling */
   transition: transform 0.3s ease; /* Add a transition effect for the transform property */
   transform-origin: center; /* Set the transform origin to the center of the bullet-point */
+  box-shadow: 0 0 0 7px white;
 }
 
 .timeline-entry:hover .bullet-point {
