@@ -144,8 +144,16 @@
 .timeline-entry.highlighted {
   background-image: linear-gradient(
     to left,
-    rgba(255, 215, 0, 1),
-    /* gold color */ rgba(255, 223, 0, 0)
+    rgba(255, 223, 0, 0.6),
+    /* gold color at 60% opacity */ rgba(255, 223, 0, 0)
+  );
+}
+
+.timeline-entry.highlighted:hover {
+  background-image: linear-gradient(
+    to left,
+    rgba(255, 223, 0, 1),
+    /* gold color at 100% opacity */ rgba(255, 223, 0, 0)
   );
 }
 
