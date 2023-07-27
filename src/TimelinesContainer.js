@@ -302,16 +302,25 @@ const Timeline = ({ title, entries }) => {
     setShouldScrollToBottom(false); // Set to false when the bullet-point is clicked
   };
 
-  const handleAddHabitEntry = (habit) => {
-    const newEntry = {
-      id: uuidv4(),
-      content: habit,
-      timestamp: new Date().toString(),
-      editable: false,
-      highlighted: false,
-    };
-    setTimelineEntries((prevEntries) => [...prevEntries, newEntry]); // Append new entry instead of prepending
-    setShouldScrollToBottom(true); // Scroll to bottom when a new entry is added
+  const handleAddHabitEntry = async (habit) => {
+    setLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate 1 second delay
+
+      const newEntry = {
+        id: uuidv4(),
+        content: habit,
+        timestamp: new Date().toString(),
+        editable: false,
+        highlighted: false,
+      };
+      setTimelineEntries((prevEntries) => [...prevEntries, newEntry]); // Append new entry instead of prepending
+      setShouldScrollToBottom(true); // Scroll to bottom when a new entry is added
+    } catch (error) {
+      console.error('Error adding habit entry:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   // Function to add a new habit
