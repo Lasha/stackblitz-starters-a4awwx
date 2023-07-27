@@ -140,23 +140,34 @@ const Timeline = ({ title, entries }) => {
     };
   }, []);
 
-  const addEntry = (event) => {
-    event.preventDefault();
-    const textarea = event.target.elements.entry;
-    const content = textarea.value.trim();
-    if (content !== '') {
-      setShouldScrollToBottom(true);
+  const addEntry = async (event) => {
+    event.preventDefault(); // Prevent form submission
+    setLoading(true);
 
-      const newEntry = {
-        id: uuidv4(), // Generate a unique ID for the entry
-        // id: Date.now(),
-        content,
-        timestamp: new Date().toString(),
-        editable: false,
-        highlighted: false, // Set "highlighted" to false for newly generated entries
-      };
-      setTimelineEntries((prevEntries) => [...prevEntries, newEntry]);
-      textarea.value = '';
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API call delay
+
+      const textarea = event.target.elements.entry;
+      const content = textarea.value.trim();
+
+      if (content !== '') {
+        setShouldScrollToBottom(true);
+
+        const newEntry = {
+          id: uuidv4(), // Generate a unique ID for the entry
+          content,
+          timestamp: new Date().toString(),
+          editable: false,
+          highlighted: false, // Set "highlighted" to false for newly generated entries
+        };
+
+        setTimelineEntries((prevEntries) => [...prevEntries, newEntry]);
+        textarea.value = '';
+      }
+    } catch (error) {
+      console.error('Failed to add entry:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -457,8 +468,14 @@ const Timeline = ({ title, entries }) => {
       </div>
 
       <form className="entry-input" onSubmit={addEntry}>
-        <textarea name="entry" placeholder="Add an entry..." />
-        <button type="submit">Add</button>
+        <textarea
+          name="entry"
+          placeholder="Add an entry..."
+          disabled={loading}
+        />
+        <button type="submit" disabled={loading}>
+          Add
+        </button>
       </form>
 
       <div className="habits-container">
