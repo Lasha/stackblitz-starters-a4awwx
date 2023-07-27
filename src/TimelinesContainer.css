@@ -16,6 +16,7 @@
   padding: 0;
   margin-right: 10px;
   max-width: 300px;
+  height: calc(100vh - 20px);
 }
 
 .timeline-header-container {
@@ -73,10 +74,10 @@
 }
 
 .timeline-entries {
-  flex: 1 0 100%;
+  flex: 1 1 auto;
   overflow-y: auto;
   margin-bottom: 0;
-  max-height: 500px;
+  /* max-height: 500px; */
   /* Add smooth scrolling behavior */
   /* scroll-behavior: smooth; */
 }
