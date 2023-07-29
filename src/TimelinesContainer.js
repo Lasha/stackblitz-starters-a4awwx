@@ -10,7 +10,7 @@ const simulateAPICall = (timeout) =>
     setTimeout(() => {
       const entries = Array.from({ length: 20 }, (_, entryIndex) => {
         const date = new Date();
-        date.setDate(date.getDate() - Math.floor(entryIndex / 3));
+        date.setDate(date.getDate() - Math.floor((19 - entryIndex) / 1));
 
         return {
           id: uuidv4(), // Generate a unique ID for the entry
