@@ -8,13 +8,19 @@ import './TimelinesContainer.css'; // Import the CSS file for TimelinesContainer
 const simulateAPICall = (timeout) =>
   new Promise((resolve) => {
     setTimeout(() => {
-      const entries = Array.from({ length: 20 }, (_, entryIndex) => ({
-        id: uuidv4(), // Generate a unique ID for the entry
-        content: `Entry ${entryIndex + 1}`,
-        timestamp: new Date().toString(),
-        editable: false,
-        highlighted: false, // Set "highlighted" to false for newly generated entries
-      }));
+      const entries = Array.from({ length: 20 }, (_, entryIndex) => {
+        const date = new Date();
+        date.setDate(date.getDate() - Math.floor(entryIndex / 3));
+
+        return {
+          id: uuidv4(), // Generate a unique ID for the entry
+          content: `Entry ${entryIndex + 1}`,
+          timestamp: date.toString(),
+          editable: false,
+          highlighted: false, // Set "highlighted" to false for newly generated entries
+        };
+      });
+
       resolve(entries);
     }, timeout);
   });
