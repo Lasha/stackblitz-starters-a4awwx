@@ -93,7 +93,7 @@
       rgba(240, 240, 240, 0)
     )
     30;
-  border-width: 0 0 2px;
+  border-width: 0 0 1px;
   border-style: solid;
   margin-top: -2px;
   position: relative; /* To position the bullet point and the connecting line */
