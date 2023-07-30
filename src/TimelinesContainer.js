@@ -111,6 +111,15 @@ const Timeline = ({ title, entries }) => {
     // Add more habits as needed
   ]);
 
+  // Define your state and ref here...
+  const [entryValue, setEntryValue] = useState('');
+  const textareaRef = useRef();
+  const [templates, setTemplates] = useState([
+    'Template 1:\nThis is a sample template',
+    'Template 2:\nThis is another sample template',
+    'Template 3:\nThis is yet another sample template',
+  ]);
+
   const timelineRef = useRef(null);
   const prevScrollHeightRef = useRef(0);
 
@@ -362,6 +371,27 @@ const Timeline = ({ title, entries }) => {
     setHabitsExpanded(!habitsExpanded);
   };
 
+  const handleSelectTemplate = (event) => {
+    const templateIndex = parseInt(event.target.value, 10);
+
+    if (isNaN(templateIndex)) {
+      return;
+    }
+
+    const textareaContent = entryValue.trim();
+
+    if (
+      textareaContent !== '' &&
+      !window.confirm('This will replace your current content. Are you sure?')
+    ) {
+      event.target.value = 'default'; // Reset the select value
+      return; // If the user cancels, do nothing
+    }
+
+    setEntryValue(templates[templateIndex]); // Replace the textarea value with the selected template
+    event.target.value = 'default'; // Reset the select value after populating the textarea
+  };
+
   return (
     <div className="timeline">
       <div className="timeline-header-container">
@@ -493,14 +523,33 @@ const Timeline = ({ title, entries }) => {
 
       <form className="entry-input" onSubmit={addEntry}>
         <textarea
+          ref={textareaRef}
           name="entry"
-          placeholder="Add an entry..."
-          disabled={loading}
+          placeholder="What's happening?"
+          value={entryValue}
+          onChange={(e) => setEntryValue(e.target.value)}
         />
-        <button type="submit" disabled={loading}>
+        <button disabled={loading} type="submit">
           Add
         </button>
       </form>
+
+      <div className="template-container">
+        <select
+          defaultValue="default"
+          onChange={handleSelectTemplate}
+          disabled={loading}
+        >
+          <option value="default" disabled>
+            Select a template...
+          </option>
+          {templates.map((template, index) => (
+            <option key={index} value={index}>
+              {`Template ${index + 1}`}
+            </option>
+          ))}
+        </select>
+      </div>
 
       {showHabits && (
         <div className="habits-container">
