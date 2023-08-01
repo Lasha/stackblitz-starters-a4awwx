@@ -30,16 +30,27 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 0 10px;
+  gap: 5px;
 }
 
-.timeline-header div {
+.timeline-header .timeline-editing {
   display: flex;
   gap: 5px;
+  flex: 1;
+}
+
+.timeline-header input {
+  flex: 1;
+}
+
+.timeline-header button {
+  flex: 0;
 }
 
 .timeline-header input,
 .timeline-header button {
   padding: 6px 8px;
+  width: 100%;
 }
 
 .timeline-header h2,

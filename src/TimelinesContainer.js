@@ -397,7 +397,7 @@ const Timeline = ({ title, entries }) => {
       <div className="timeline-header-container">
         <div className="timeline-header">
           {editingTitle ? (
-            <div>
+            <div className="timeline-editing">
               <input
                 type="text"
                 value={newTitle}
