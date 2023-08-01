@@ -32,6 +32,16 @@
   padding: 10px 0 10px;
 }
 
+.timeline-header div {
+  display: flex;
+  gap: 5px;
+}
+
+.timeline-header input,
+.timeline-header button {
+  padding: 6px 8px;
+}
+
 .timeline-header h2,
 .timeline-header p {
   margin: 0;
