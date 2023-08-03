@@ -178,7 +178,7 @@ const Timeline = ({ title, entries }) => {
         };
 
         setTimelineEntries((prevEntries) => [...prevEntries, newEntry]);
-        textarea.value = '';
+        setEntryValue('');
       }
     } catch (error) {
       console.error('Failed to add entry:', error);
