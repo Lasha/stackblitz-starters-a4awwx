@@ -204,6 +204,8 @@
   flex: 1;
   padding: 6px 8px;
   font-family: system-ui;
+  box-sizing: border-box;
+  min-height: 46px;
 }
 
 .template-container {

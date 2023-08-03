@@ -156,6 +156,10 @@ const Timeline = ({ title, entries }) => {
     };
   }, []);
 
+  useEffect(() => {
+    adjustTextareaHeight();
+  }, [entryValue]);
+
   const addEntry = async (event) => {
     event.preventDefault(); // Prevent form submission
     setLoading(true);
@@ -392,6 +396,11 @@ const Timeline = ({ title, entries }) => {
     event.target.value = 'default'; // Reset the select value after populating the textarea
   };
 
+  const adjustTextareaHeight = () => {
+    textareaRef.current.style.height = '0px';
+    textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+  };
+
   return (
     <div className="timeline">
       <div className="timeline-header-container">
@@ -527,7 +536,10 @@ const Timeline = ({ title, entries }) => {
           name="entry"
           placeholder="What's happening?"
           value={entryValue}
-          onChange={(e) => setEntryValue(e.target.value)}
+          onChange={(e) => {
+            setEntryValue(e.target.value);
+            adjustTextareaHeight();
+          }}
         />
         <button disabled={loading} type="submit">
           Add
