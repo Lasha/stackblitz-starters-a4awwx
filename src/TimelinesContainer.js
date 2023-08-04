@@ -114,6 +114,7 @@ const Timeline = ({ title, entries }) => {
   // Define your state and ref here...
   const [entryValue, setEntryValue] = useState('');
   const textareaRef = useRef();
+  const entryInputSubmitButtonRef = useRef();
   const [templates, setTemplates] = useState([
     'Template 1:\nThis is a sample template',
     'Template 2:\nThis is another sample template',
@@ -533,6 +534,7 @@ const Timeline = ({ title, entries }) => {
       <form className="entry-input" onSubmit={addEntry}>
         <textarea
           ref={textareaRef}
+          disabled={loading}
           name="entry"
           placeholder="What's happening?"
           value={entryValue}
@@ -540,8 +542,21 @@ const Timeline = ({ title, entries }) => {
             setEntryValue(e.target.value);
             adjustTextareaHeight();
           }}
+          onKeyDown={(e) => {
+            if (
+              (e.ctrlKey || e.metaKey) &&
+              (e.keyCode === 13 || e.charCode === 13)
+            ) {
+              e.preventDefault();
+              entryInputSubmitButtonRef.current.click();
+            }
+          }}
         />
-        <button disabled={loading} type="submit">
+        <button
+          ref={entryInputSubmitButtonRef}
+          disabled={loading}
+          type="submit"
+        >
           Add
         </button>
       </form>
