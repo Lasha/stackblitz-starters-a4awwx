@@ -162,6 +162,7 @@ const Timeline = ({ title, entries }) => {
   }, [entryValue]);
 
   const addEntry = async (event) => {
+    debugger;
     event.preventDefault(); // Prevent form submission
     setLoading(true);
 
