@@ -116,7 +116,7 @@ const Timeline = ({ title, entries }) => {
   const textareaRef = useRef();
   const entryInputSubmitButtonRef = useRef();
   const [templates, setTemplates] = useState([
-    'Template 1:\nThis is a sample template',
+    'Template 1:\nThis is a sample template\nWith third line text',
     'Template 2:\nThis is another sample template',
     'Template 3:\nThis is yet another sample template',
   ]);
