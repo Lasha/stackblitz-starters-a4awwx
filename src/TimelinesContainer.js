@@ -61,7 +61,7 @@ const TimelinesContainer = () => {
       for (let i = 1; i <= timelineCount; i++) {
         const entries = await simulateAPICall(100); // Simulate a delay of 1 second for each timeline
         timelinesData.push({
-          id: i,
+          id: uuidv4(),
           title: `Timeline ${i}`,
           entries,
         });
