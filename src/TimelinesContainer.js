@@ -540,7 +540,8 @@ const Timeline = ({ title, entries }) => {
           value={entryValue}
           onChange={(e) => {
             setEntryValue(e.target.value);
-            adjustTextareaHeight();
+            // Note: We have a useEffect that listens for changes to entryValue
+            // Which in turn calls adjustTextareaHeight() for auto height
           }}
           onKeyDown={(e) => {
             if (
