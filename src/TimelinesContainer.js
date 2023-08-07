@@ -235,8 +235,9 @@ const Timeline = ({ title, entries }) => {
   // Function to handle edit mode
   const handleEditModeRefSetting = (el, entryId) => {
     if (!editEntryTextareaRefs.current[entryId]) {
-      editEntryTextareaRefs.current[entryId] = React.createRef();
-      editEntryTextareaRefs.current[entryId].current = el;
+      // editEntryTextareaRefs.current[entryId] = createRef();
+      // editEntryTextareaRefs.current[entryId].current = el;
+      editEntryTextareaRefs.current[entryId] = el;
     }
   };
 
@@ -424,9 +425,9 @@ const Timeline = ({ title, entries }) => {
   const adjustTextareaHeight = (entryId) => {
     if (entryId) {
       const ref = editEntryTextareaRefs.current[entryId];
-      if (ref && ref.current) {
-        ref.current.style.height = '0px';
-        ref.current.style.height = `${ref.current.scrollHeight}px`;
+      if (ref) {
+        ref.style.height = '0px';
+        ref.style.height = `${ref.scrollHeight}px`;
       }
     } else {
       textareaRef.current.style.height = '0px';
