@@ -435,6 +435,14 @@ const Timeline = ({ title, entries }) => {
     }
   };
 
+  const setCursorToEnd = (textareaElement) => {
+    if (textareaElement) {
+      const textarea = textareaElement;
+      textarea.focus();
+      textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
+    }
+  };
+
   // This function exists to update editEntryTextareaRefs{}
   // and run adjustTextareaHeight() automatically when an entry goes into editing mode.
   // TODO/DEV NOTE: This may not need to run within ref={} of each timeline entry.
@@ -442,7 +450,7 @@ const Timeline = ({ title, entries }) => {
     if (!editEntryTextareaRefs.current[entryId]) {
       handleEditModeRefSetting(el, entryId);
       adjustTextareaHeight(entryId);
-      // el.focus() // TODO: auto-focus and have cursor go to end of text
+      setCursorToEnd(el);
     }
   };
 
