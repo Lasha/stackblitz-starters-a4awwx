@@ -442,6 +442,7 @@ const Timeline = ({ title, entries }) => {
     if (!editEntryTextareaRefs.current[entryId]) {
       handleEditModeRefSetting(el, entryId);
       adjustTextareaHeight(entryId);
+      // el.focus() // TODO: auto-focus and have cursor go to end of text
     }
   };
 
