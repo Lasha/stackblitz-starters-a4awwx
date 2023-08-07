@@ -105,6 +105,8 @@
 }
 
 .timeline-entry {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 0;
   transition: background-color 0.3s;
   padding: 16px 10px;
@@ -180,6 +182,13 @@
     rgba(255, 223, 0, 1),
     /* gold color at 100% opacity */ rgba(255, 223, 0, 0)
   );
+}
+
+.timeline-entry textarea {
+  padding: 6px 8px;
+  font-family: system-ui;
+  box-sizing: border-box;
+  min-height: 46px;
 }
 
 .timeline-entry p {
