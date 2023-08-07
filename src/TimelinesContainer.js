@@ -1,6 +1,6 @@
 // TimelinesContainer.js
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import DOMPurify from 'dompurify';
 import { v4 as uuidv4 } from 'uuid';
 import './TimelinesContainer.css'; // Import the CSS file for TimelinesContainer
@@ -124,11 +124,11 @@ const Timeline = ({ title, entries }) => {
   const timelineRef = useRef(null);
   const prevScrollHeightRef = useRef(0);
 
-  // const habits = [
-  //   'Drink 8 glasses of water',
-  //   'Take a 15-minute walk',
-  //   'Eat a piece of fruit',
-  // ];
+  // useRef to store a mapping of entry IDs to refs
+  const editEntryTextareaRefs = useRef({});
+
+  // State to keep track of refs for textareas in editing mode
+  // const [editingRefs, setEditingRefs] = useState({});
 
   useEffect(() => {
     if (!newEntriesLoaded) {
@@ -232,6 +232,14 @@ const Timeline = ({ title, entries }) => {
     }
   };
 
+  // Function to handle edit mode
+  const handleEditModeRefSetting = (el, entryId) => {
+    if (!editEntryTextareaRefs.current[entryId]) {
+      editEntryTextareaRefs.current[entryId] = React.createRef();
+      editEntryTextareaRefs.current[entryId].current = el;
+    }
+  };
+
   const handleEditEntry = (entryId) => {
     setShouldScrollToBottom(false);
     setTimelineEntries((prevEntries) =>
@@ -253,6 +261,8 @@ const Timeline = ({ title, entries }) => {
       );
       setTimelineEntries(updatedEntries);
       setShouldScrollToBottom(false);
+
+      handleSaveOrCancel(entryId);
     } catch (error) {
       console.error('Error saving entry:', error);
     } finally {
@@ -266,6 +276,12 @@ const Timeline = ({ title, entries }) => {
         entry.id === entryId ? { ...entry, editable: false } : entry
       )
     );
+
+    handleSaveOrCancel(entryId);
+  };
+
+  const handleSaveOrCancel = (entryId) => {
+    delete editEntryTextareaRefs.current[entryId];
   };
 
   const handleEntryChange = (entryId, newContent) => {
@@ -400,9 +416,28 @@ const Timeline = ({ title, entries }) => {
     event.target.value = 'default'; // Reset the select value after populating the textarea
   };
 
-  const adjustTextareaHeight = () => {
-    textareaRef.current.style.height = '0px';
-    textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+  // Function to adjust textarea height
+  const adjustTextareaHeight = (entryId) => {
+    if (entryId) {
+      const ref = editEntryTextareaRefs.current[entryId];
+      if (ref && ref.current) {
+        ref.current.style.height = '0px';
+        ref.current.style.height = `${ref.current.scrollHeight}px`;
+      }
+    } else {
+      textareaRef.current.style.height = '0px';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  };
+
+  // This function exists to update editEntryTextareaRefs{}
+  // and run adjustTextareaHeight() automatically when an entry goes into editing mode.
+  // TODO/DEV NOTE: This may not need to run within ref={} of each timeline entry.
+  const updateRefOfEntryTextarea = (el, entryId) => {
+    if (!editEntryTextareaRefs.current[entryId]) {
+      handleEditModeRefSetting(el, entryId);
+      adjustTextareaHeight(entryId);
+    }
   };
 
   return (
@@ -481,8 +516,16 @@ const Timeline = ({ title, entries }) => {
             {entry.editable ? (
               <>
                 <textarea
+                  ref={(el) => {
+                    if (el) {
+                      updateRefOfEntryTextarea(el, entry.id);
+                    }
+                  }}
                   value={entry.content}
-                  onChange={(e) => handleEntryChange(entry.id, e.target.value)}
+                  onChange={(e) => {
+                    handleEntryChange(entry.id, e.target.value);
+                    adjustTextareaHeight(entry.id);
+                  }}
                   disabled={loading}
                 />
                 <div className="entry-buttons">
