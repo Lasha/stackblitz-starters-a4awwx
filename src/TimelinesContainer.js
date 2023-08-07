@@ -269,6 +269,9 @@ const Timeline = ({ title, entries }) => {
   };
 
   const handleEntryChange = (entryId, newContent) => {
+    // TODO: BUG => clicking "cancel" doesn't revert the original content of the entry.
+    // Editing an entry shouldn't update the main state
+    // Instead, update a secondary state that gets cleared when saved/cancelled
     setTimelineEntries((prevEntries) =>
       prevEntries.map((entry) =>
         entry.id === entryId ? { ...entry, content: newContent } : entry
