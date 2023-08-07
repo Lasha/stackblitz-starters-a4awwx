@@ -288,6 +288,10 @@ const Timeline = ({ title, entries }) => {
     // TODO: BUG => clicking "cancel" doesn't revert the original content of the entry.
     // Editing an entry shouldn't update the main state
     // Instead, update a secondary state that gets cleared when saved/cancelled
+
+    // TODO: check if value is already false before setting again?
+    setShouldScrollToBottom(false);
+
     setTimelineEntries((prevEntries) =>
       prevEntries.map((entry) =>
         entry.id === entryId ? { ...entry, content: newContent } : entry
