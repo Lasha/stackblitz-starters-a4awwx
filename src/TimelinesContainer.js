@@ -235,8 +235,6 @@ const Timeline = ({ title, entries }) => {
   // Function to handle edit mode
   const handleEditModeRefSetting = (el, entryId) => {
     if (!editEntryTextareaRefs.current[entryId]) {
-      // editEntryTextareaRefs.current[entryId] = createRef();
-      // editEntryTextareaRefs.current[entryId].current = el;
       editEntryTextareaRefs.current[entryId] = el;
     }
   };
@@ -548,6 +546,17 @@ const Timeline = ({ title, entries }) => {
                   onChange={(e) => {
                     handleEntryChange(entry.id, e.target.value);
                     adjustTextareaHeight(entry.id);
+                  }}
+                  onKeyDown={(e) => {
+                    // TODO: Implement command + return to save edited entry
+                    // MAYBE need to store separate ref for save button(?)
+                    // if (
+                    //   (e.ctrlKey || e.metaKey) &&
+                    //   (e.keyCode === 13 || e.charCode === 13)
+                    // ) {
+                    //   e.preventDefault();
+                    //   entryInputSubmitButtonRef.current.click();
+                    // }
                   }}
                   disabled={loading}
                 />
