@@ -157,11 +157,14 @@
 
 .timeline-entry.highlighted .bullet-point,
 .timeline-entry .bullet-point.highlighted {
-  background-color: gold; /* Change the bullet-point color to gold when highlighted */
-  border: 1px solid #b4b4b4;
+  /* background-color: gold; */
+  /* background-color: #4caf50; */
+  background-color: rgb(14, 165, 233);
+  /* border: 1px solid #b4b4b4; */
 }
 
-.timeline-entry:hover, .timeline-entry:focus-within {
+.timeline-entry:hover,
+.timeline-entry:focus-within {
   background-image: linear-gradient(
     to left,
     rgba(240, 240, 240, 1),
@@ -172,17 +175,27 @@
 .timeline-entry.highlighted {
   background-image: linear-gradient(
     to left,
-    rgba(255, 223, 0, 0.6),
-    /* gold color at 60% opacity */ rgba(255, 223, 0, 0)
+    rgba(14, 165, 233, 0.4),
+    rgba(255, 223, 0, 0)
   );
+  /* background-image: linear-gradient(
+    to left,
+    rgba(255, 223, 0, 0.6),
+    rgba(255, 223, 0, 0)
+  ); */
 }
 
 .timeline-entry.highlighted:hover {
   background-image: linear-gradient(
     to left,
-    rgba(255, 223, 0, 1),
-    /* gold color at 100% opacity */ rgba(255, 223, 0, 0)
+    rgba(14, 165, 233, 0.7),
+    rgba(240, 240, 240, 0)
   );
+  /* background-image: linear-gradient(
+    to left,
+    rgba(255, 223, 0, 1),
+    rgba(255, 223, 0, 0)
+  ); */
 }
 
 .timeline-entry textarea {
@@ -290,7 +303,8 @@
 .add-habit-button {
   margin-top: 8px;
   cursor: pointer;
-  background-color: #4caf50;
+  /* background-color: #4caf50; */
+  background-color: rgb(14, 165, 233);
   border: none;
   color: #fff;
   font-size: 16px;
@@ -299,7 +313,8 @@
 }
 
 .add-habit-button:hover {
-  background-color: #45a049;
+  /* background-color: #45a049; */
+  background-color: rgb(3, 105, 161);
 }
 
 .habits-header {
