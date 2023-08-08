@@ -526,6 +526,15 @@ const Timeline = ({ title, entries }) => {
                 entry.highlighted ? ' highlighted' : ''
               }`}
               onClick={() => handleBulletClick(entry.id)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.keyCode === 13 || e.keyCode === 32) {
+                  // 13 for Enter, 32 for Space
+                  e.preventDefault(); // Prevent any default behavior
+                  e.target.click();
+                }
+              }}
             ></div>
             {entry.editable ? (
               <>

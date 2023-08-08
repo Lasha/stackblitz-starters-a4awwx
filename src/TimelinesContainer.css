@@ -150,7 +150,8 @@
   box-shadow: 0 0 0 4px white;
 }
 
-.timeline-entry:hover .bullet-point {
+.timeline-entry:hover .bullet-point,
+.timeline-entry:focus-within .bullet-point {
   transform: translate(-50%, -50%) scale(1.3); /* Scale and translate the bullet-point when hovered or highlighted */
 }
 
@@ -160,7 +161,7 @@
   border: 1px solid #b4b4b4;
 }
 
-.timeline-entry:hover {
+.timeline-entry:hover, .timeline-entry:focus-within {
   background-image: linear-gradient(
     to left,
     rgba(240, 240, 240, 1),
