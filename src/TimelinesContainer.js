@@ -280,6 +280,7 @@ const Timeline = ({ title, entries }) => {
   };
 
   const handleSaveOrCancel = (entryId) => {
+    // Delete ref to entry form element when it's no longer needed
     delete editEntryFormElementRefs.current[entryId];
   };
 
@@ -445,7 +446,6 @@ const Timeline = ({ title, entries }) => {
 
   // This function exists to update editEntryFormElementRefs{}
   // and run adjustTextareaHeight() automatically when an entry goes into editing mode.
-  // TODO/DEV NOTE: This may not need to run within ref={} of each timeline entry.
   const updateRefOfEntryTextarea = (entryFormElement, entryId) => {
     if (!editEntryFormElementRefs.current[entryId]) {
       handleEditModeRefSetting(entryFormElement, entryId);
