@@ -125,7 +125,7 @@ const Timeline = ({ title, entries }) => {
   const prevScrollHeightRef = useRef(0);
 
   // useRef to store a mapping of entry IDs to refs
-  const editEntryTextareaRefs = useRef({});
+  const editEntryFormElementRefs = useRef({});
 
   // State to keep track of refs for textareas in editing mode
   // const [editingRefs, setEditingRefs] = useState({});
@@ -233,9 +233,9 @@ const Timeline = ({ title, entries }) => {
   };
 
   // Function to handle edit mode
-  const handleEditModeRefSetting = (el, entryId) => {
-    if (!editEntryTextareaRefs.current[entryId]) {
-      editEntryTextareaRefs.current[entryId] = el;
+  const handleEditModeRefSetting = (entryFormElement, entryId) => {
+    if (!editEntryFormElementRefs.current[entryId]) {
+      editEntryFormElementRefs.current[entryId] = entryFormElement;
     }
   };
 
@@ -280,7 +280,7 @@ const Timeline = ({ title, entries }) => {
   };
 
   const handleSaveOrCancel = (entryId) => {
-    delete editEntryTextareaRefs.current[entryId];
+    delete editEntryFormElementRefs.current[entryId];
   };
 
   const handleEntryChange = (entryId, newContent) => {
@@ -420,9 +420,11 @@ const Timeline = ({ title, entries }) => {
   };
 
   // Function to adjust textarea height
+  // TODO: possibly refactor to be more generic. Pass in form DOM element to adjust
   const adjustTextareaHeight = (entryId) => {
     if (entryId) {
-      const ref = editEntryTextareaRefs.current[entryId];
+      const ref =
+        editEntryFormElementRefs.current[entryId].elements['entry-textarea'];
       if (ref) {
         ref.style.height = '0px';
         ref.style.height = `${ref.scrollHeight}px`;
@@ -441,14 +443,14 @@ const Timeline = ({ title, entries }) => {
     }
   };
 
-  // This function exists to update editEntryTextareaRefs{}
+  // This function exists to update editEntryFormElementRefs{}
   // and run adjustTextareaHeight() automatically when an entry goes into editing mode.
   // TODO/DEV NOTE: This may not need to run within ref={} of each timeline entry.
-  const updateRefOfEntryTextarea = (el, entryId) => {
-    if (!editEntryTextareaRefs.current[entryId]) {
-      handleEditModeRefSetting(el, entryId);
+  const updateRefOfEntryTextarea = (entryFormElement, entryId) => {
+    if (!editEntryFormElementRefs.current[entryId]) {
+      handleEditModeRefSetting(entryFormElement, entryId);
       adjustTextareaHeight(entryId);
-      setCursorToEnd(el);
+      setCursorToEnd(entryFormElement.elements['entry-textarea']);
     }
   };
 
@@ -535,36 +537,39 @@ const Timeline = ({ title, entries }) => {
               }}
             ></div>
             {entry.editable ? (
-              <>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSaveEntry(entry.id);
+                }}
+                ref={(entryFormElement) => {
+                  if (entryFormElement) {
+                    updateRefOfEntryTextarea(entryFormElement, entry.id);
+                  }
+                }}
+              >
                 <textarea
-                  ref={(el) => {
-                    if (el) {
-                      updateRefOfEntryTextarea(el, entry.id);
-                    }
-                  }}
+                  name="entry-textarea"
                   value={entry.content}
                   onChange={(e) => {
                     handleEntryChange(entry.id, e.target.value);
                     adjustTextareaHeight(entry.id);
                   }}
                   onKeyDown={(e) => {
-                    // TODO: Implement command + return to save edited entry
-                    // MAYBE need to store separate ref for save button(?)
-                    // if (
-                    //   (e.ctrlKey || e.metaKey) &&
-                    //   (e.keyCode === 13 || e.charCode === 13)
-                    // ) {
-                    //   e.preventDefault();
-                    //   entryInputSubmitButtonRef.current.click();
-                    // }
+                    if (
+                      (e.ctrlKey || e.metaKey) &&
+                      (e.keyCode === 13 || e.charCode === 13)
+                    ) {
+                      e.preventDefault();
+                      editEntryFormElementRefs.current[entry.id].elements[
+                        'entry-save'
+                      ].click();
+                    }
                   }}
                   disabled={loading}
                 />
                 <div className="entry-buttons">
-                  <button
-                    onClick={() => handleSaveEntry(entry.id)}
-                    disabled={loading}
-                  >
+                  <button type="submit" disabled={loading} name="entry-save">
                     Save
                   </button>
                   <button
@@ -574,7 +579,7 @@ const Timeline = ({ title, entries }) => {
                     Cancel
                   </button>
                 </div>
-              </>
+              </form>
             ) : (
               <>
                 <div
