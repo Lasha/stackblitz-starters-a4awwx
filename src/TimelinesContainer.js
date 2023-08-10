@@ -134,6 +134,8 @@ const Timeline = ({ title, entries }) => {
     if (!newEntriesLoaded) {
       scrollToBottom();
     } else {
+      // When entries (e.g. older entries) are appended to the timeline,
+      // maintain the scroll position. User manually scrolls to see new content.
       const newContentHeight =
         timelineRef.current.scrollHeight - prevScrollHeightRef.current;
       timelineRef.current.scrollTop += newContentHeight;
@@ -199,16 +201,7 @@ const Timeline = ({ title, entries }) => {
   };
 
   const handleRefresh = async () => {
-    setLoading(true);
-    try {
-      const refreshedEntries = await simulateAPICall(1000);
-      setTimelineEntries(refreshedEntries);
-      setNewEntriesLoaded(true);
-    } catch (error) {
-      console.error('Error refreshing data:', error);
-    } finally {
-      setLoading(false);
-    }
+    window.alert('Implement timeline entries refresh');
   };
 
   const handleToggleTimestamp = () => {
