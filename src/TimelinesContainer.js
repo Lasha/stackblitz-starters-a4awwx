@@ -282,21 +282,6 @@ const Timeline = ({ title, entries }) => {
     delete editEntryFormElementRefs.current[entryId];
   };
 
-  // const handleEntryChange = (entryId, newContent) => {
-  //   // TODO: BUG => clicking "cancel" doesn't revert the original content of the entry.
-  //   // Editing an entry shouldn't update the main state
-  //   // Instead, update a secondary state that gets cleared when saved/cancelled
-
-  //   // TODO: check if value is already false before setting again?
-  //   setShouldScrollToBottom(false);
-
-  //   setTimelineEntries((prevEntries) =>
-  //     prevEntries.map((entry) =>
-  //       entry.id === entryId ? { ...entry, content: newContent } : entry
-  //     )
-  //   );
-  // };
-
   const handleTitleChange = (e) => {
     setNewTitle(e.target.value);
   };
@@ -537,9 +522,7 @@ const Timeline = ({ title, entries }) => {
             {entry.editable ? (
               <form
                 onSubmit={(e) => {
-                  debugger;
                   e.preventDefault();
-                  // handleEntryChange(entry.id, e.target.elements['entry-textarea'].value);
                   const newContent = e.target.elements['entry-textarea'].value;
                   handleSaveEntry(entry.id, newContent);
                 }}
