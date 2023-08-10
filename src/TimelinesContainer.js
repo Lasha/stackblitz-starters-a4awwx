@@ -241,14 +241,19 @@ const Timeline = ({ title, entries }) => {
     );
   };
 
-  const handleSaveEntry = async (entryId) => {
+  const handleSaveEntry = async (entryId, newContent) => {
     setLoading(true);
     try {
       // Simulate API call with a 1-second delay
       await new Promise((resolve) => setTimeout(resolve, 1000));
       const updatedEntries = timelineEntries.map((entry) =>
         entry.id === entryId
-          ? { ...entry, editable: false, timestamp: new Date().toString() }
+          ? {
+              ...entry,
+              content: newContent,
+              editable: false,
+              timestamp: new Date().toString(),
+            }
           : entry
       );
       setTimelineEntries(updatedEntries);
@@ -277,20 +282,20 @@ const Timeline = ({ title, entries }) => {
     delete editEntryFormElementRefs.current[entryId];
   };
 
-  const handleEntryChange = (entryId, newContent) => {
-    // TODO: BUG => clicking "cancel" doesn't revert the original content of the entry.
-    // Editing an entry shouldn't update the main state
-    // Instead, update a secondary state that gets cleared when saved/cancelled
+  // const handleEntryChange = (entryId, newContent) => {
+  //   // TODO: BUG => clicking "cancel" doesn't revert the original content of the entry.
+  //   // Editing an entry shouldn't update the main state
+  //   // Instead, update a secondary state that gets cleared when saved/cancelled
 
-    // TODO: check if value is already false before setting again?
-    setShouldScrollToBottom(false);
+  //   // TODO: check if value is already false before setting again?
+  //   setShouldScrollToBottom(false);
 
-    setTimelineEntries((prevEntries) =>
-      prevEntries.map((entry) =>
-        entry.id === entryId ? { ...entry, content: newContent } : entry
-      )
-    );
-  };
+  //   setTimelineEntries((prevEntries) =>
+  //     prevEntries.map((entry) =>
+  //       entry.id === entryId ? { ...entry, content: newContent } : entry
+  //     )
+  //   );
+  // };
 
   const handleTitleChange = (e) => {
     setNewTitle(e.target.value);
@@ -532,8 +537,11 @@ const Timeline = ({ title, entries }) => {
             {entry.editable ? (
               <form
                 onSubmit={(e) => {
+                  debugger;
                   e.preventDefault();
-                  handleSaveEntry(entry.id);
+                  // handleEntryChange(entry.id, e.target.elements['entry-textarea'].value);
+                  const newContent = e.target.elements['entry-textarea'].value;
+                  handleSaveEntry(entry.id, newContent);
                 }}
                 ref={(entryFormElement) => {
                   if (entryFormElement) {
@@ -543,9 +551,8 @@ const Timeline = ({ title, entries }) => {
               >
                 <textarea
                   name="entry-textarea"
-                  value={entry.content}
+                  defaultValue={entry.content}
                   onChange={(e) => {
-                    handleEntryChange(entry.id, e.target.value);
                     adjustTextareaHeight(entry.id);
                   }}
                   onKeyDown={(e) => {

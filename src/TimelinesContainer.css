@@ -198,6 +198,11 @@
   ); */
 }
 
+.timeline-entry form {
+  display: flex;
+  flex-direction: column;
+}
+
 .timeline-entry textarea {
   padding: 6px 8px;
   font-family: system-ui;
