@@ -8,7 +8,7 @@ import './TimelinesContainer.css'; // Import the CSS file for TimelinesContainer
 const simulateAPICall = (timeout) =>
   new Promise((resolve) => {
     setTimeout(() => {
-      const entries = Array.from({ length: 5 }, (_, entryIndex) => {
+      const entries = Array.from({ length: 20 }, (_, entryIndex) => {
         const date = new Date();
         date.setDate(date.getDate() - Math.floor((19 - entryIndex) / 3));
 
@@ -267,14 +267,27 @@ const Timeline = ({ title, entries }) => {
     }
   };
 
-  const handleCancelEdit = (entryId) => {
-    setTimelineEntries((prevEntries) =>
-      prevEntries.map((entry) =>
-        entry.id === entryId ? { ...entry, editable: false } : entry
-      )
-    );
+  const handleCancelEditEntry = (entryId) => {
+    let shouldCancelEdit = true;
+    const isDirty =
+      editEntryFormElementRefs.current[entryId].elements['entry-textarea']
+        .isDirty;
 
-    handleSaveOrCancel(entryId);
+    if (isDirty) {
+      shouldCancelEdit = window.confirm(
+        'Are you sure you want to cancel? All changes will be lost.'
+      );
+    }
+
+    if (shouldCancelEdit) {
+      setTimelineEntries((prevEntries) =>
+        prevEntries.map((entry) =>
+          entry.id === entryId ? { ...entry, editable: false } : entry
+        )
+      );
+
+      handleSaveOrCancel(entryId);
+    }
   };
 
   const handleSaveOrCancel = (entryId) => {
@@ -537,6 +550,9 @@ const Timeline = ({ title, entries }) => {
                   defaultValue={entry.content}
                   onChange={(e) => {
                     adjustTextareaHeight(entry.id);
+                    editEntryFormElementRefs.current[entry.id].elements[
+                      'entry-textarea'
+                    ].isDirty = true;
                   }}
                   onKeyDown={(e) => {
                     if (
@@ -556,7 +572,10 @@ const Timeline = ({ title, entries }) => {
                     Save
                   </button>
                   <button
-                    onClick={() => handleCancelEdit(entry.id)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleCancelEditEntry(entry.id);
+                    }}
                     disabled={loading}
                   >
                     Cancel
