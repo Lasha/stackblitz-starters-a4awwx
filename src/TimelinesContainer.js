@@ -8,7 +8,7 @@ import './TimelinesContainer.css'; // Import the CSS file for TimelinesContainer
 const simulateAPICall = (timeout) =>
   new Promise((resolve) => {
     setTimeout(() => {
-      const entries = Array.from({ length: 20 }, (_, entryIndex) => {
+      const entries = Array.from({ length: 5 }, (_, entryIndex) => {
         const date = new Date();
         date.setDate(date.getDate() - Math.floor((19 - entryIndex) / 3));
 
