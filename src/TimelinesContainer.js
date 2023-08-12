@@ -184,6 +184,7 @@ const Timeline = ({ title, entries }) => {
     // 3. notice timeline auto scrolled to the top now (FIX THIS BUG)
     // 4. scroll down and up again to trigger loading older posts. once they're loaded, timeline scrolls all the way down due to bad calculation.
     // 5. this line below is needed to "refresh/update" the scrollHeight so the math is correctly calculated when loading older posts again
+    // Ideally this whole displayTimelineEntries switching won't even be a thing because when we're loading read data and perform search, the original timelineEntries will be updated etc.
     prevScrollHeightRef.current = timelineRef.current.scrollHeight;
   }, [timelineSearchResults]);
 
