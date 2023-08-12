@@ -147,6 +147,7 @@ const Timeline = ({ title, entries }) => {
     if (!newEntriesLoaded) {
       scrollToBottom();
     } else {
+      debugger;
       // When entries (e.g. older entries) are appended to the timeline,
       // maintain the scroll position. User manually scrolls to see new content.
       const newContentHeight =
@@ -175,6 +176,16 @@ const Timeline = ({ title, entries }) => {
   useEffect(() => {
     adjustTextareaHeight();
   }, [entryValue]);
+
+  useEffect(() => {
+    // Why is this here? EDGE CASE BUG FIX. Probably delete in future for better solution... Reproduce:
+    // 1. search something that results in 1 item. older posts get loaded invisibly.
+    // 2. delete search term and go back to normal entries.
+    // 3. notice timeline auto scrolled to the top now (FIX THIS BUG)
+    // 4. scroll down and up again to trigger loading older posts. once they're loaded, timeline scrolls all the way down due to bad calculation.
+    // 5. this line below is needed to "refresh/update" the scrollHeight so the math is correctly calculated when loading older posts again
+    prevScrollHeightRef.current = timelineRef.current.scrollHeight;
+  }, [timelineSearchResults]);
 
   const handleSearch = async (e) => {
     if (e.key === 'Enter') {
@@ -233,6 +244,7 @@ const Timeline = ({ title, entries }) => {
   };
 
   const scrollToBottom = () => {
+    debugger;
     if (timelineRef.current && shouldScrollToBottom) {
       timelineRef.current.scrollTop = timelineRef.current.scrollHeight;
     }
