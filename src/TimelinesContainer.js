@@ -186,6 +186,7 @@ const Timeline = ({ title, entries }) => {
     // 5. this line below is needed to "refresh/update" the scrollHeight so the math is correctly calculated when loading older posts again
     // Ideally this whole displayTimelineEntries switching won't even be a thing because when we're loading read data and perform search, the original timelineEntries will be updated etc.
     prevScrollHeightRef.current = timelineRef.current.scrollHeight;
+    scrollToBottom(); // when flipping back to timelineEntries after viewing timelineSearchResults, scroll to bottom of timeline again
   }, [timelineSearchResults]);
 
   const handleSearch = async (e) => {
