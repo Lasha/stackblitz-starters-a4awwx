@@ -95,6 +95,21 @@
   flex-direction: column; /* Stack the toggles vertically */
 }
 
+.timeline-search {
+  display: flex;
+  gap: 10px;
+  flex: 0;
+  padding: 10px;
+  background-color: #f0f0f0;
+}
+
+.timeline-search input {
+  flex: 1;
+  padding: 6px 8px;
+  font-family: system-ui;
+  box-sizing: border-box;
+}
+
 .timeline-entries {
   flex: 1 1 auto;
   overflow-y: auto;
@@ -221,7 +236,7 @@
 }
 
 .entry-input {
-  display: flex;
+  display: flex;e
   gap: 10px;
   flex: 0;
   padding: 10px;

@@ -39,6 +39,16 @@ const simulateLoadOlderEntries = (timeout) =>
     }, timeout);
   });
 
+const fakeAPISearch = (entries, term) =>
+  new Promise((resolve) => {
+    setTimeout(() => {
+      const results = entries.filter((entry) =>
+        entry.content.toLowerCase().includes(term.toLowerCase())
+      );
+      resolve(results);
+    }, 1000);
+  });
+
 const formatTimestamp = (timestamp) => {
   return new Date(timestamp).toLocaleString('en-US', {
     year: 'numeric',
@@ -93,6 +103,9 @@ const TimelinesContainer = () => {
 };
 
 const Timeline = ({ title, entries }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [timelineSearchResults, setTimelineSearchResults] = useState(null);
+
   const [timelineTitle, setTimelineTitle] = useState(title);
   const [timelineEntries, setTimelineEntries] = useState(entries);
   const [loading, setLoading] = useState(false);
@@ -162,6 +175,31 @@ const Timeline = ({ title, entries }) => {
   useEffect(() => {
     adjustTextareaHeight();
   }, [entryValue]);
+
+  const handleSearch = async (e) => {
+    if (e.key === 'Enter') {
+      const term = e.target.value;
+
+      if (!term) {
+        setTimelineSearchResults(null);
+        return;
+      }
+
+      setLoading(true);
+      const results = await fakeAPISearch(timelineEntries, searchTerm);
+
+      setTimelineSearchResults(results);
+
+      setLoading(false);
+    }
+  };
+
+  const handleSearchChange = (e) => {
+    const term = e.target.value;
+    setSearchTerm(term);
+  };
+
+  const displayTimelineEntries = timelineSearchResults || timelineEntries;
 
   const addEntry = async (event) => {
     event.preventDefault(); // Prevent form submission
@@ -509,8 +547,17 @@ const Timeline = ({ title, entries }) => {
           </button>
         </div>
       </div>
+      <div className="timeline-search">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          onKeyDown={handleSearch}
+          placeholder="Search..."
+        />
+      </div>
       <div className="timeline-entries" ref={timelineRef}>
-        {timelineEntries.map((entry) => (
+        {displayTimelineEntries.map((entry) => (
           <div
             key={entry.id}
             className={`timeline-entry${
