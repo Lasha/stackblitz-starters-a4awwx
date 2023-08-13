@@ -147,7 +147,6 @@ const Timeline = ({ title, entries }) => {
     if (!newEntriesLoaded) {
       scrollToBottom();
     } else {
-      debugger;
       // When entries (e.g. older entries) are appended to the timeline,
       // maintain the scroll position. User manually scrolls to see new content.
       const newContentHeight =
@@ -246,7 +245,6 @@ const Timeline = ({ title, entries }) => {
   };
 
   const scrollToBottom = () => {
-    debugger;
     if (timelineRef.current && shouldScrollToBottom) {
       timelineRef.current.scrollTop = timelineRef.current.scrollHeight;
     }
