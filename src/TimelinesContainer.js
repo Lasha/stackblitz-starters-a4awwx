@@ -204,6 +204,11 @@ const Timeline = ({ title, entries }) => {
 
       setLoading(false);
     }
+
+    if (e.key === 'Escape') {
+      setSearchTerm('');
+      setTimelineSearchResults(null);
+    }
   };
 
   const handleSearchChange = (e) => {
