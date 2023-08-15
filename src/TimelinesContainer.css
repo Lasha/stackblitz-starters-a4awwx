@@ -27,7 +27,7 @@
 
 .timeline-header-container {
   background-color: #f0f0f0;
-  padding: 10px;
+  padding: 10px 20px;
 }
 
 .timeline-header {
@@ -104,7 +104,7 @@
   display: flex;
   gap: 10px;
   flex: 0;
-  padding: 0 10px 12px;
+  padding: 0 20px 12px;
   background-color: #f0f0f0;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   z-index: 1;
@@ -131,7 +131,7 @@
   flex-direction: column;
   margin-bottom: 0;
   transition: background-color 0.3s;
-  padding: 16px 10px;
+  padding: 16px 20px;
   /* border-bottom: 1px solid #f0f0f0; */
   border-image: linear-gradient(
       to left,
@@ -143,14 +143,14 @@
   border-style: solid;
   margin-top: -2px;
   position: relative; /* To position the bullet point and the connecting line */
-  padding-left: 40px; /* Add some space for the bullet point and connecting line */
+  padding-left: 50px; /* Add some space for the bullet point and connecting line */
   font-family: system-ui;
 }
 .timeline-entry::before {
   content: '';
   position: absolute;
   top: 0; /* Adjust the positioning based on your design preference */
-  left: 14px; /* Adjust the positioning based on your design preference */
+  left: 21px; /* Adjust the positioning based on your design preference */
   width: 2px;
   height: calc(100%); /* Calculate the height of the connecting line */
   background-color: #888; /* Use the same color as the bullet point */
@@ -160,7 +160,7 @@
 .timeline-entry .bullet-point {
   position: absolute;
   top: 50%;
-  left: 16px;
+  left: 22px;
   width: 12px;
   height: 12px;
   border-radius: 50%;
@@ -246,8 +246,9 @@
   display: flex;
   gap: 10px;
   flex: 0;
-  padding: 10px;
+  padding: 10px 20px;
   background-color: #f0f0f0;
+  box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1), 0 -2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
 .entry-input textarea {
@@ -259,8 +260,11 @@
 }
 
 .template-container {
-  padding: 10px;
+  padding: 10px 20px;
   display: flex;
+  background-color: #f0f0f0;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
 .template-container select {
@@ -268,12 +272,35 @@
   flex: 1;
 }
 
+.habits-container {
+  margin-top: 25px;
+}
+
 /* Styles for habit bullet points */
 .habits {
-  padding: 10px; /* Add padding instead of margin-top */
+  padding: 10px 20px; /* Add padding instead of margin-top */
   display: flex; /* Use flexbox */
   flex-direction: column; /* Use flex direction column to stack elements vertically */
   gap: 8px; /* Add 8px gap between .habit-item elements */
+  background-color: #f3f3f3;
+}
+
+.habits-header {
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #f3f3f3;
+  font-size: 18px;
+  /* margin-top: 10px; */
+  user-select: none; /* prevent the text selection on double click */
+  color: #333;
+  transition: color 0.3s;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1), 0 -2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.habits-header:hover {
+  color: #000;
+  background-color: #e2e2e2;
 }
 
 .habit-item {
@@ -342,19 +369,4 @@
 .add-habit-button:hover {
   /* background-color: #45a049; */
   background-color: rgb(3, 105, 161);
-}
-
-.habits-header {
-  cursor: pointer;
-  padding: 10px;
-  background-color: #f0f0f0;
-  font-size: 18px;
-  /* margin-top: 10px; */
-  user-select: none; /* prevent the text selection on double click */
-  color: #333;
-  transition: color 0.3s;
-}
-
-.habits-header:hover {
-  color: #000;
 }
