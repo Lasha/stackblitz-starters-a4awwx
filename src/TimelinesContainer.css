@@ -144,7 +144,6 @@
   margin-top: -2px;
   position: relative; /* To position the bullet point and the connecting line */
   padding-left: 50px; /* Add some space for the bullet point and connecting line */
-  font-family: system-ui;
 }
 .timeline-entry::before {
   content: '';
@@ -259,17 +258,32 @@
   min-height: 46px;
 }
 
+.entry-input button {
+  background-color: rgb(107 114 128);
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  font-family: system-ui;
+}
+
+.entry-input button:hover {
+  background-color: rgb(75 85 99);
+}
+
 .template-container {
   padding: 10px 20px;
   display: flex;
   background-color: #f0f0f0;
   border-radius: 0 0 10px 10px;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  /* box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); */
 }
 
 .template-container select {
   padding: 5px;
   flex: 1;
+  font-family: system-ui;
 }
 
 .habits-container {
@@ -348,6 +362,7 @@
   border: none;
   color: #555;
   font-size: 14px;
+  font-family: system-ui;
 }
 
 .habit-actions button:hover {
@@ -364,6 +379,7 @@
   font-size: 16px;
   padding: 8px 16px;
   border-radius: 8px;
+  font-family: system-ui;
 }
 
 .add-habit-button:hover {
