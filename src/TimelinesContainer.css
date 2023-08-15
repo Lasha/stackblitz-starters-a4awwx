@@ -113,9 +113,12 @@
 
 .timeline-search input {
   flex: 1;
-  padding: 6px 8px;
+  padding: 8px 10px;
   font-family: system-ui;
   box-sizing: border-box;
+  border-radius: 8px;
+  border: 0;
+  box-shadow: 0 2px 3px -1px rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1);
 }
 
 .timeline-entries {
