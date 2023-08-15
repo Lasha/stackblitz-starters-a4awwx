@@ -374,7 +374,8 @@
   margin-top: 8px;
   cursor: pointer;
   /* background-color: #4caf50; */
-  background-color: rgb(14, 165, 233);
+  /* background-color: rgb(14, 165, 233); */
+  background-color: rgb(107 114 128);
   border: none;
   color: #fff;
   font-size: 16px;
@@ -385,5 +386,6 @@
 
 .add-habit-button:hover {
   /* background-color: #45a049; */
-  background-color: rgb(3, 105, 161);
+  /* background-color: rgb(3, 105, 161); */
+  background-color: rgb(75 85 99);
 }
