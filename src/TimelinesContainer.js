@@ -134,6 +134,8 @@ const Timeline = ({ title, entries }) => {
     'Template 3:\nThis is yet another sample template',
   ]);
 
+  const timelineTitleInputRef = useRef(null);
+
   const timelineRef = useRef(null);
   const prevScrollHeightRef = useRef(0);
 
@@ -358,7 +360,9 @@ const Timeline = ({ title, entries }) => {
     setEditingTitle(true);
   };
 
-  const handleSaveTitle = () => {
+  const handleSaveTitle = (e) => {
+    e.preventDefault();
+
     setLoading(true);
     // Simulate API call with a 1-second delay
     setTimeout(() => {
@@ -487,6 +491,7 @@ const Timeline = ({ title, entries }) => {
     }
   };
 
+  // textareaElement param can be an input or textarea
   const setCursorToEnd = (textareaElement) => {
     if (textareaElement) {
       const textarea = textareaElement;
@@ -510,14 +515,17 @@ const Timeline = ({ title, entries }) => {
       <div className="timeline-header-container">
         <div className="timeline-header">
           {editingTitle ? (
-            <div className="timeline-editing">
+            <form className="timeline-editing" onSubmit={handleSaveTitle}>
               <input
                 type="text"
                 value={newTitle}
                 onChange={handleTitleChange}
                 disabled={loading}
+                ref={(timelineTitleInputRef) => {
+                  setCursorToEnd(timelineTitleInputRef);
+                }}
               />
-              <button onClick={handleSaveTitle} disabled={loading}>
+              <button type="submit" disabled={loading}>
                 Save
               </button>
               <button
@@ -526,7 +534,7 @@ const Timeline = ({ title, entries }) => {
               >
                 Cancel
               </button>
-            </div>
+            </form>
           ) : (
             <h2 onClick={handleEditTitle}>{timelineTitle}</h2>
           )}
