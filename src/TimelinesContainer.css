@@ -260,6 +260,9 @@
   font-family: system-ui;
   box-sizing: border-box;
   min-height: 46px;
+  border-radius: 8px;
+  border: 0;
+  box-shadow: 0 2px 3px -1px rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1);
 }
 
 .entry-input button {
@@ -270,6 +273,7 @@
   padding: 10px;
   cursor: pointer;
   font-family: system-ui;
+  box-shadow: 0 2px 3px -1px rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1);
 }
 
 .entry-input button:hover {
@@ -285,9 +289,12 @@
 }
 
 .template-container select {
-  padding: 5px;
+  padding: 6px 8px;
   flex: 1;
   font-family: system-ui;
+  border-radius: 8px;
+  border: 0;
+  box-shadow: 0 2px 3px -1px rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1);
 }
 
 .habits-container {
@@ -307,7 +314,8 @@
   cursor: pointer;
   padding: 10px 20px;
   background-color: #f3f3f3;
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: 700;
   /* margin-top: 10px; */
   user-select: none; /* prevent the text selection on double click */
   color: #333;
