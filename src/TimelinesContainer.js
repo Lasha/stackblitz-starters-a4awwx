@@ -88,15 +88,13 @@ const TimelinesContainer = () => {
       {loading ? (
         <p>Loading...</p> // Display a loading state
       ) : (
-        <div className="timelines-wrapper">
-          {timelines.map((timeline) => (
-            <Timeline
-              key={timeline.id}
-              title={timeline.title}
-              entries={timeline.entries}
-            />
-          ))}
-        </div>
+        timelines.map((timeline) => (
+          <Timeline
+            key={timeline.id}
+            title={timeline.title}
+            entries={timeline.entries}
+          />
+        ))
       )}
     </div>
   );
@@ -751,7 +749,7 @@ const Timeline = ({ title, entries }) => {
                   <span
                     className="habit-bullet-point"
                     onClick={() => handleAddHabitEntry(habit)}
-                  >+</span>
+                  ></span>
                   <span className="habit-text">{habit}</span>
                   {showEditOptions && (
                     <div className="habit-actions">
