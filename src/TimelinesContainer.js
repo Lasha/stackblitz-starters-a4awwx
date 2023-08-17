@@ -749,7 +749,9 @@ const Timeline = ({ title, entries }) => {
                   <span
                     className="habit-bullet-point"
                     onClick={() => handleAddHabitEntry(habit)}
-                  ></span>
+                  >
+                    +
+                  </span>
                   <span className="habit-text">{habit}</span>
                   {showEditOptions && (
                     <div className="habit-actions">
