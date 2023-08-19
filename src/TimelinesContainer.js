@@ -114,7 +114,9 @@ const Timeline = ({ title, entries }) => {
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(true);
   const [editingTitle, setEditingTitle] = useState(false);
   const [newTitle, setNewTitle] = useState(title);
-  const [habitsExpanded, setHabitsExpanded] = useState(true);
+  const [habitsExpanded, setHabitsExpanded] = useState(
+    !!Math.round(Math.random())
+  );
   const [habits, setHabits] = useState([
     'Exercise',
     'Read',
