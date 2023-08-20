@@ -10,8 +10,6 @@
 }
 
 .timeline {
-  scroll-snap-stop: always;
-  scroll-snap-align: center;
   display: flex;
   flex-direction: column;
   flex: 0 0 300px;
@@ -28,8 +26,14 @@
 }
 
 @media only screen and (max-width: 700px) {
+  .timelines-container {
+    scroll-snap-type: x mandatory;
+  }
+
   .timeline {
     flex: 0 0 100%;
+    scroll-snap-stop: always;
+    scroll-snap-align: center;
   }
 }
 
