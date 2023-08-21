@@ -125,7 +125,9 @@ const Timeline = ({ title, entries }) => {
     // Add more habits as needed
   ]);
 
-  const [todosExpanded, setTodosExpanded] = useState(false);
+  const [todosExpanded, setTodosExpanded] = useState(
+    !!Math.round(Math.random())
+  );
   const [todos, setTodos] = useState(['Task 1', 'Task 2', 'Task 3']); // Default todos to start with
 
   // Define your state and ref here...
@@ -624,6 +626,14 @@ const Timeline = ({ title, entries }) => {
                 onChange={handleToggleEditOptions}
               />
               Show Edit Options
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={showTodos}
+                onChange={() => setShowTodos((prev) => !prev)}
+              />
+              Show Todos
             </label>
             <label>
               <input

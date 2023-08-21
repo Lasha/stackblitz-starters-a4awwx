@@ -314,6 +314,112 @@
   box-shadow: 0 2px 3px -1px rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1);
 }
 
+.todos-container {
+  margin-top: 25px;
+}
+
+/* Styles for habit bullet points */
+.todos {
+  padding: 10px 20px 14px; /* Add padding instead of margin-top */
+  display: flex; /* Use flexbox */
+  flex-direction: column; /* Use flex direction column to stack elements vertically */
+  gap: 8px; /* Add 8px gap between .habit-item elements */
+  background-color: #f3f3f3;
+}
+
+.todos-header {
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #f3f3f3;
+  font-size: 16px;
+  font-weight: 700;
+  /* margin-top: 10px; */
+  user-select: none; /* prevent the text selection on double click */
+  color: #333;
+  transition: color 0.3s;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1), 0 -2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.todos-header:hover {
+  color: #000;
+  background-color: #e2e2e2;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+}
+
+.todo-bullet-point {
+  position: relative;
+  line-height: 1;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #b4b4b4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 16px;
+  margin-right: 8px;
+  transition: transform 0.3s ease; /* Add a transition effect for the transform property */
+  cursor: pointer; /* Keep cursor: pointer on todo-bullet-point */
+}
+
+.todo-item:hover .todo-bullet-point {
+  transform: scale(1.2); /* Scale the bullet-point when hovered */
+}
+
+.todo-item .todo-text {
+  font-size: 16px;
+  flex: 1; /* Allow the text to take up remaining space */
+  white-space: nowrap; /* Prevent text from wrapping to multiple lines */
+  overflow: hidden; /* Hide any overflowed text */
+  text-overflow: ellipsis; /* Show ellipsis for truncated text */
+}
+
+.todo-actions {
+  display: flex; /* Use flexbox to keep the actions on the same line */
+  align-items: center; /* Align items vertically */
+  margin-left: 8px; /* Add spacing between text and actions */
+}
+
+.todo-actions button {
+  margin-left: 8px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  color: #555;
+  font-size: 14px;
+  font-family: system-ui;
+}
+
+.todo-actions button:hover {
+  color: #333;
+}
+
+.add-todo-button {
+  margin-top: 8px;
+  cursor: pointer;
+  /* background-color: #4caf50; */
+  /* background-color: rgb(14, 165, 233); */
+  background-color: rgb(107 114 128);
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: system-ui;
+}
+
+.add-todo-button:hover {
+  /* background-color: #45a049; */
+  /* background-color: rgb(3, 105, 161); */
+  background-color: rgb(75 85 99);
+}
+
 .habits-container {
   margin-top: 25px;
 }
