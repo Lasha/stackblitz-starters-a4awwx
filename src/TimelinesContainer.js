@@ -829,7 +829,7 @@ const Timeline = ({ title, entries }) => {
                     className="todo-bullet-point"
                     onClick={() => handleAddTodoEntry(todo, index)}
                   >
-                    +
+                    ✓
                   </span>
                   <span className="todo-text">{todo}</span>
                   {showEditOptions && (

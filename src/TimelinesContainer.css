@@ -356,20 +356,25 @@
   line-height: 1;
   width: 20px;
   height: 20px;
-  border-radius: 50%;
+  border-radius: 20%;
   background-color: #b4b4b4;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #fff;
+  color: rgba(240, 240, 240, 0);
   font-size: 16px;
   margin-right: 8px;
-  transition: transform 0.3s ease; /* Add a transition effect for the transform property */
-  cursor: pointer; /* Keep cursor: pointer on todo-bullet-point */
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .todo-item:hover .todo-bullet-point {
   transform: scale(1.2); /* Scale the bullet-point when hovered */
+  background-color: #555;
+}
+
+.todo-bullet-point:hover {
+  color: rgba(240, 240, 240, 1);
 }
 
 .todo-item .todo-text {
@@ -470,12 +475,14 @@
   color: #fff;
   font-size: 16px;
   margin-right: 8px;
-  transition: transform 0.3s ease; /* Add a transition effect for the transform property */
+  transition: all 0.3s ease;
   cursor: pointer; /* Keep cursor: pointer on habit-bullet-point */
 }
 
 .habit-item:hover .habit-bullet-point {
   transform: scale(1.2); /* Scale the bullet-point when hovered */
+  color: rgba(240, 240, 240, 1);
+  background-color: #555;
 }
 
 .habit-item .habit-text {
