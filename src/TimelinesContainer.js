@@ -110,6 +110,7 @@ const Timeline = ({ title, entries }) => {
   const [showTimestamp, setShowTimestamp] = useState(true);
   const [showEditOptions, setShowEditOptions] = useState(true);
   const [showHabits, setShowHabits] = useState(true);
+  const [showTodos, setShowTodos] = useState(true);
   const [newEntriesLoaded, setNewEntriesLoaded] = useState(false);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(true);
   const [editingTitle, setEditingTitle] = useState(false);
@@ -123,6 +124,9 @@ const Timeline = ({ title, entries }) => {
     'Meditate',
     // Add more habits as needed
   ]);
+
+  const [todosExpanded, setTodosExpanded] = useState(false);
+  const [todos, setTodos] = useState(['Task 1', 'Task 2', 'Task 3']); // Default todos to start with
 
   // Define your state and ref here...
   const [entryValue, setEntryValue] = useState('');
@@ -401,11 +405,74 @@ const Timeline = ({ title, entries }) => {
     setShouldScrollToBottom(false); // Set to false when the bullet-point is clicked
   };
 
-  const handleAddHabitEntry = async (habit) => {
+  // ----------------------------Todos functions
+  // Function to add a todo as an entry in the timeline and remove it from todos
+  const handleAddTodoEntry = async (todo, todoIndex) => {
     setLoading(true);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate 1 second delay
 
+      debugger;
+
+      const newEntry = {
+        id: uuidv4(),
+        content: todo,
+        timestamp: new Date().toString(),
+        editable: false,
+        highlighted: false,
+      };
+      setTimelineEntries((prevEntries) => [...prevEntries, newEntry]); // Append new entry instead of prepending
+      setShouldScrollToBottom(true); // Scroll to bottom when a new entry is added
+
+      // Remove the todo from the list
+      setTodos((prevTodos) =>
+        prevTodos.filter((_, index) => index !== todoIndex)
+      );
+    } catch (error) {
+      console.error('Error adding todo entry:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Function to add a new todo
+  const handleAddTodo = () => {
+    const newTodo = prompt('Enter a new task:');
+    if (newTodo) {
+      setTodos((prevTodos) => [...prevTodos, newTodo]);
+    }
+  };
+
+  // Function to edit a todo
+  const handleEditTodo = (todoIndex) => {
+    const updatedTodo = prompt('Edit the task:', todos[todoIndex]);
+    if (updatedTodo) {
+      setTodos((prevTodos) =>
+        prevTodos.map((todo, index) =>
+          index === todoIndex ? updatedTodo : todo
+        )
+      );
+    }
+  };
+
+  // Function to delete a todo
+  const handleDeleteTodo = (todoIndex) => {
+    setTodos((prevTodos) =>
+      prevTodos.filter((_, index) => index !== todoIndex)
+    );
+  };
+
+  // Function to handle click on the todos header
+  const handleTodosHeaderClick = () => {
+    setTodosExpanded(!todosExpanded);
+  };
+
+  //----------------------------- Habits functions
+  const handleAddHabitEntry = async (habit) => {
+    setLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate 1 second delay
+      debugger;
       const newEntry = {
         id: uuidv4(),
         content: habit,
@@ -735,6 +802,45 @@ const Timeline = ({ title, entries }) => {
           ))}
         </select>
       </div>
+
+      {showTodos && (
+        <div className="todos-container">
+          <div className="todos-header" onClick={handleTodosHeaderClick}>
+            Todos {todosExpanded ? '▾' : '▸'}
+          </div>
+          {todosExpanded && (
+            <div className="todos">
+              {!todos.length && (
+                <div className="todo-item">No todos! Add some?</div>
+              )}
+              {todos.map((todo, index) => (
+                <div key={index} className="todo-item">
+                  <span
+                    className="todo-bullet-point"
+                    onClick={() => handleAddTodoEntry(todo, index)}
+                  >
+                    +
+                  </span>
+                  <span className="todo-text">{todo}</span>
+                  {showEditOptions && (
+                    <div className="todo-actions">
+                      <button onClick={() => handleEditTodo(index)}>
+                        Edit
+                      </button>
+                      <button onClick={() => handleDeleteTodo(index)}>
+                        Delete
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
+              <button className="add-todo-button" onClick={handleAddTodo}>
+                Add Task
+              </button>
+            </div>
+          )}
+        </div>
+      )}
 
       {showHabits && (
         <div className="habits-container">
