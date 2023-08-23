@@ -587,12 +587,10 @@ const Timeline = ({ title, entries }) => {
 
   return (
     <div className="timeline">
-      {/* {showConfetti && <Confetti tweenDuration={1000} />} */}
       {showConfetti && (
         <Confetti
-          tweenDuration={5000}
-          // run={showConfetti}
-          numberOfPieces={showConfetti ? 500 : 0}
+          tweenDuration={10_000}
+          numberOfPieces={showConfetti ? 1000 : 0}
           recycle={false}
           onConfettiComplete={(confetti) => {
             confetti.reset();
