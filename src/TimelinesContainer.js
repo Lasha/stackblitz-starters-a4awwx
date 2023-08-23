@@ -414,8 +414,6 @@ const Timeline = ({ title, entries }) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate 1 second delay
 
-      debugger;
-
       const newEntry = {
         id: uuidv4(),
         content: todo,
@@ -474,7 +472,6 @@ const Timeline = ({ title, entries }) => {
     setLoading(true);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate 1 second delay
-      debugger;
       const newEntry = {
         id: uuidv4(),
         content: habit,
