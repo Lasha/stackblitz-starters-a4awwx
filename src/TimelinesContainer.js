@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import DOMPurify from 'dompurify';
+import Confetti from 'react-confetti';
 import { v4 as uuidv4 } from 'uuid';
 import './TimelinesContainer.css'; // Import the CSS file for TimelinesContainer
 
@@ -101,6 +102,8 @@ const TimelinesContainer = () => {
 };
 
 const Timeline = ({ title, entries }) => {
+  const [showConfetti, setShowConfetti] = useState(false);
+
   const [searchTerm, setSearchTerm] = useState('');
   const [timelineSearchResults, setTimelineSearchResults] = useState(null);
 
@@ -399,11 +402,17 @@ const Timeline = ({ title, entries }) => {
     setTimelineEntries((prevEntries) =>
       prevEntries.map((entry) => {
         if (entry.id === id) {
+          setShowConfetti(!entry.highlighted);
+          // setTimeout(() => {
+          //   setShowConfetti(false);
+          // }, 5000); // confetti will display for 5 seconds
+
           return { ...entry, highlighted: !entry.highlighted };
         }
         return entry;
       })
     );
+
     setShouldScrollToBottom(false); // Set to false when the bullet-point is clicked
   };
 
@@ -578,6 +587,21 @@ const Timeline = ({ title, entries }) => {
 
   return (
     <div className="timeline">
+      {/* {showConfetti && <Confetti tweenDuration={1000} />} */}
+      {showConfetti && (
+        <Confetti
+          tweenDuration={5000}
+          // run={showConfetti}
+          numberOfPieces={showConfetti ? 500 : 0}
+          recycle={false}
+          onConfettiComplete={(confetti) => {
+            confetti.reset();
+            setShowConfetti(false);
+          }}
+          width={'300'}
+          // height={'100%'}
+        />
+      )}
       <div className="timeline-header-container">
         <div className="timeline-header">
           {editingTitle ? (
@@ -818,7 +842,7 @@ const Timeline = ({ title, entries }) => {
           {todosExpanded && (
             <div className="todos">
               {!todos.length && (
-                <div className="todo-item">No todos! Add some?</div>
+                <div className="todo-item">No tasks! Add some?</div>
               )}
               {todos.map((todo, index) => (
                 <div key={index} className="todo-item">
