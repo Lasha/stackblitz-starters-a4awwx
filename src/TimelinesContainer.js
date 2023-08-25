@@ -594,6 +594,9 @@ const Timeline = ({ title, entries }) => {
           numberOfPieces={showConfetti ? 1000 : 0}
           recycle={false}
           onConfettiComplete={(confetti) => {
+            // TODO: when clicking entries in rapid succession,
+            // stop the previous animation and restart confetti
+            // - pass confetti ref possibly?
             confetti.reset();
             setShowConfetti(false);
           }}
