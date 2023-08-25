@@ -589,6 +589,7 @@ const Timeline = ({ title, entries }) => {
     <div className="timeline">
       {showConfetti && (
         <Confetti
+          gravity={0.25}
           tweenDuration={10_000}
           numberOfPieces={showConfetti ? 1000 : 0}
           recycle={false}
