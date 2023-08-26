@@ -143,9 +143,9 @@ const Timeline = ({ title, entries }) => {
     'Template 3:\nThis is yet another sample template',
   ]);
 
-  const timelineTitleInputRef = useRef(null);
-
   const timelineRef = useRef(null);
+
+  const timelineEntriesRef = useRef(null);
   const prevScrollHeightRef = useRef(0);
 
   // useRef to store a mapping of entry IDs to refs
@@ -161,25 +161,25 @@ const Timeline = ({ title, entries }) => {
       // When entries (e.g. older entries) are appended to the timeline,
       // maintain the scroll position. User manually scrolls to see new content.
       const newContentHeight =
-        timelineRef.current.scrollHeight - prevScrollHeightRef.current;
-      timelineRef.current.scrollTop += newContentHeight;
-      prevScrollHeightRef.current = timelineRef.current.scrollHeight;
+        timelineEntriesRef.current.scrollHeight - prevScrollHeightRef.current;
+      timelineEntriesRef.current.scrollTop += newContentHeight;
+      prevScrollHeightRef.current = timelineEntriesRef.current.scrollHeight;
       setNewEntriesLoaded(false);
     }
   }, [timelineEntries]);
 
   useEffect(() => {
-    prevScrollHeightRef.current = timelineRef.current.scrollHeight;
+    prevScrollHeightRef.current = timelineEntriesRef.current.scrollHeight;
     const handleScroll = () => {
-      if (timelineRef.current.scrollTop === 0) {
+      if (timelineEntriesRef.current.scrollTop === 0) {
         loadOlderPosts();
       }
     };
 
-    timelineRef.current.addEventListener('scroll', handleScroll);
+    timelineEntriesRef.current.addEventListener('scroll', handleScroll);
 
     return () => {
-      timelineRef.current.removeEventListener('scroll', handleScroll);
+      timelineEntriesRef.current.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -195,7 +195,7 @@ const Timeline = ({ title, entries }) => {
     // 4. scroll down and up again to trigger loading older posts. once they're loaded, timeline scrolls all the way down due to bad calculation.
     // 5. this line below is needed to "refresh/update" the scrollHeight so the math is correctly calculated when loading older posts again
     // Ideally this whole displayTimelineEntries switching won't even be a thing because when we're loading read data and perform search, the original timelineEntries will be updated etc.
-    prevScrollHeightRef.current = timelineRef.current.scrollHeight;
+    prevScrollHeightRef.current = timelineEntriesRef.current.scrollHeight;
     scrollToBottom(); // when flipping back to timelineEntries after viewing timelineSearchResults, scroll to bottom of timeline again
   }, [timelineSearchResults]);
 
@@ -261,8 +261,9 @@ const Timeline = ({ title, entries }) => {
   };
 
   const scrollToBottom = () => {
-    if (timelineRef.current && shouldScrollToBottom) {
-      timelineRef.current.scrollTop = timelineRef.current.scrollHeight;
+    if (timelineEntriesRef.current && shouldScrollToBottom) {
+      timelineEntriesRef.current.scrollTop =
+        timelineEntriesRef.current.scrollHeight;
     }
   };
 
@@ -586,7 +587,7 @@ const Timeline = ({ title, entries }) => {
   };
 
   return (
-    <div className="timeline">
+    <div className="timeline" ref={timelineRef}>
       {showConfetti && (
         <Confetti
           gravity={0.25}
@@ -600,8 +601,8 @@ const Timeline = ({ title, entries }) => {
             confetti.reset();
             setShowConfetti(false);
           }}
-          width={'300'}
-          // height={'100%'}
+          width={timelineRef.current.offsetWidth}
+          height={timelineRef.current.offsetHeight}
         />
       )}
       <div className="timeline-header-container">
@@ -681,7 +682,7 @@ const Timeline = ({ title, entries }) => {
           placeholder="Search..."
         />
       </div>
-      <div className="timeline-entries" ref={timelineRef}>
+      <div className="timeline-entries" ref={timelineEntriesRef}>
         {displayTimelineEntries.map((entry) => (
           <div
             key={entry.id}
