@@ -15,6 +15,7 @@ const simulateAPICall = (timeout) =>
 
         return {
           id: uuidv4(), // Generate a unique ID for the entry
+          type: '',
           content: `Entry ${entryIndex + 1}`,
           timestamp: date.toString(),
           editable: false,
@@ -31,6 +32,7 @@ const simulateLoadOlderEntries = (timeout) =>
     setTimeout(() => {
       const entries = Array.from({ length: 5 }, (_, entryIndex) => ({
         id: uuidv4(), // Generate a unique ID for the entry
+        type: '',
         content: `Older Entry ${entryIndex}`,
         timestamp: new Date().toString(),
         editable: false,
@@ -73,6 +75,7 @@ const TimelinesContainer = () => {
         const entries = await simulateAPICall(100); // Simulate a delay of 1 second for each timeline
         timelinesData.push({
           id: uuidv4(),
+          type: '',
           title: `Timeline ${i}`,
           entries,
         });
@@ -244,6 +247,7 @@ const Timeline = ({ title, entries }) => {
 
         const newEntry = {
           id: uuidv4(), // Generate a unique ID for the entry
+          type: '',
           content,
           timestamp: new Date().toString(),
           editable: false,
@@ -426,6 +430,7 @@ const Timeline = ({ title, entries }) => {
 
       const newEntry = {
         id: uuidv4(),
+        type: '',
         content: todo,
         timestamp: new Date().toString(),
         editable: false,
@@ -484,6 +489,7 @@ const Timeline = ({ title, entries }) => {
       await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate 1 second delay
       const newEntry = {
         id: uuidv4(),
+        type: '',
         content: habit,
         timestamp: new Date().toString(),
         editable: false,
