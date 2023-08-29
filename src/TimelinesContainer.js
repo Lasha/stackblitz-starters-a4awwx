@@ -16,6 +16,7 @@ const simulateAPICall = (timeout) =>
         return {
           id: uuidv4(), // Generate a unique ID for the entry
           type: '',
+          parent: 'id_of_parent_entry-block-timeline',
           properties: {
             content: `Entry ${entryIndex + 1}`,
             timestamp: date.toString(),
@@ -35,6 +36,7 @@ const simulateLoadOlderEntries = (timeout) =>
       const entries = Array.from({ length: 5 }, (_, entryIndex) => ({
         id: uuidv4(), // Generate a unique ID for the entry
         type: '',
+        parent: 'id_of_parent_entry-block-timeline',
         properties: {
           content: `Older Entry ${entryIndex}`,
           timestamp: new Date().toString(),
@@ -80,6 +82,7 @@ const TimelinesContainer = () => {
         timelinesData.push({
           id: uuidv4(),
           type: '',
+          parent: 'id_of_parent_entry-block-timeline',
           title: `Timeline ${i}`,
           entries,
         });
@@ -252,6 +255,7 @@ const Timeline = ({ title, entries }) => {
         const newEntry = {
           id: uuidv4(), // Generate a unique ID for the entry
           type: '',
+          parent: 'id_of_parent_entry-block-timeline',
           properties: {
             content,
             timestamp: new Date().toString(),
@@ -450,6 +454,7 @@ const Timeline = ({ title, entries }) => {
       const newEntry = {
         id: uuidv4(),
         type: '',
+        parent: 'id_of_parent_entry-block-timeline',
         properties: {
           content: todo,
           timestamp: new Date().toString(),
@@ -511,6 +516,7 @@ const Timeline = ({ title, entries }) => {
       const newEntry = {
         id: uuidv4(),
         type: '',
+        parent: 'id_of_parent_entry-block-timeline',
         properties: {
           content: habit,
           timestamp: new Date().toString(),
