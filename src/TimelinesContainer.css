@@ -251,6 +251,15 @@
   margin: 0 0 5px;
 }
 
+.timeline-entry .entry-original-type {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: rotate(-90deg);
+  transform-origin: bottom right;
+  color: #b4b4b4;
+}
+
 .entry-buttons {
   display: flex;
   gap: 10px;

@@ -22,6 +22,7 @@ const simulateAPICall = (timeout) =>
             timestamp: date.toString(),
             editable: false,
             highlighted: false,
+            original_type: '',
           },
         };
       });
@@ -42,6 +43,7 @@ const simulateLoadOlderEntries = (timeout) =>
           timestamp: new Date().toString(),
           editable: false,
           highlighted: false,
+          original_type: '',
         },
       })).reverse();
       resolve(entries);
@@ -460,6 +462,7 @@ const Timeline = ({ title, entries }) => {
           timestamp: new Date().toString(),
           editable: false,
           highlighted: false,
+          original_type: 'todo',
         },
       };
       setTimelineEntries((prevEntries) => [...prevEntries, newEntry]); // Append new entry instead of prepending
@@ -522,6 +525,7 @@ const Timeline = ({ title, entries }) => {
           timestamp: new Date().toString(),
           editable: false,
           highlighted: false,
+          original_type: 'habit',
         },
       };
       setTimelineEntries((prevEntries) => [...prevEntries, newEntry]); // Append new entry instead of prepending
@@ -792,6 +796,11 @@ const Timeline = ({ title, entries }) => {
               </form>
             ) : (
               <>
+                {entry.properties.original_type ? (
+                  <div className="entry-original-type">
+                    {entry.properties.original_type}
+                  </div>
+                ) : null}
                 <div
                   dangerouslySetInnerHTML={{
                     __html: DOMPurify.sanitize(
