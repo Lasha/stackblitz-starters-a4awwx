@@ -16,10 +16,12 @@ const simulateAPICall = (timeout) =>
         return {
           id: uuidv4(), // Generate a unique ID for the entry
           type: '',
-          content: `Entry ${entryIndex + 1}`,
-          timestamp: date.toString(),
-          editable: false,
-          highlighted: false, // Set "highlighted" to false for newly generated entries
+          properties: {
+            content: `Entry ${entryIndex + 1}`,
+            timestamp: date.toString(),
+            editable: false,
+            highlighted: false,
+          },
         };
       });
 
@@ -33,10 +35,12 @@ const simulateLoadOlderEntries = (timeout) =>
       const entries = Array.from({ length: 5 }, (_, entryIndex) => ({
         id: uuidv4(), // Generate a unique ID for the entry
         type: '',
-        content: `Older Entry ${entryIndex}`,
-        timestamp: new Date().toString(),
-        editable: false,
-        highlighted: false, // Set "highlighted" to false for newly generated entries
+        properties: {
+          content: `Older Entry ${entryIndex}`,
+          timestamp: new Date().toString(),
+          editable: false,
+          highlighted: false,
+        },
       })).reverse();
       resolve(entries);
     }, timeout);
@@ -46,7 +50,7 @@ const fakeAPISearch = (entries, term) =>
   new Promise((resolve) => {
     setTimeout(() => {
       const results = entries.filter((entry) =>
-        entry.content.toLowerCase().includes(term.toLowerCase())
+        entry.properties?.content.toLowerCase().includes(term.toLowerCase())
       );
       resolve(results);
     }, 1000);
@@ -248,10 +252,12 @@ const Timeline = ({ title, entries }) => {
         const newEntry = {
           id: uuidv4(), // Generate a unique ID for the entry
           type: '',
-          content,
-          timestamp: new Date().toString(),
-          editable: false,
-          highlighted: false, // Set "highlighted" to false for newly generated entries
+          properties: {
+            content,
+            timestamp: new Date().toString(),
+            editable: false,
+            highlighted: false,
+          },
         };
 
         setTimelineEntries((prevEntries) => [...prevEntries, newEntry]);
@@ -307,7 +313,9 @@ const Timeline = ({ title, entries }) => {
     setShouldScrollToBottom(false);
     setTimelineEntries((prevEntries) =>
       prevEntries.map((entry) =>
-        entry.id === entryId ? { ...entry, editable: true } : entry
+        entry.id === entryId
+          ? { ...entry, properties: { ...entry.properties, editable: true } }
+          : entry
       )
     );
   };
@@ -321,9 +329,12 @@ const Timeline = ({ title, entries }) => {
         entry.id === entryId
           ? {
               ...entry,
-              content: newContent,
-              editable: false,
-              timestamp: new Date().toString(),
+              properties: {
+                ...entry.properties,
+                content: newContent,
+                editable: false,
+                timestamp: new Date().toString(),
+              },
             }
           : entry
       );
@@ -353,7 +364,9 @@ const Timeline = ({ title, entries }) => {
     if (shouldCancelEdit) {
       setTimelineEntries((prevEntries) =>
         prevEntries.map((entry) =>
-          entry.id === entryId ? { ...entry, editable: false } : entry
+          entry.id === entryId
+            ? { ...entry, properties: { ...entry.properties, editable: false } }
+            : entry
         )
       );
 
@@ -407,12 +420,18 @@ const Timeline = ({ title, entries }) => {
     setTimelineEntries((prevEntries) =>
       prevEntries.map((entry) => {
         if (entry.id === id) {
-          setShowConfetti(!entry.highlighted);
+          setShowConfetti(!entry.properties?.highlighted);
           // setTimeout(() => {
           //   setShowConfetti(false);
           // }, 5000); // confetti will display for 5 seconds
 
-          return { ...entry, highlighted: !entry.highlighted };
+          return {
+            ...entry,
+            properties: {
+              ...entry.properties,
+              highlighted: !entry.properties?.highlighted,
+            },
+          };
         }
         return entry;
       })
@@ -431,10 +450,12 @@ const Timeline = ({ title, entries }) => {
       const newEntry = {
         id: uuidv4(),
         type: '',
-        content: todo,
-        timestamp: new Date().toString(),
-        editable: false,
-        highlighted: false,
+        properties: {
+          content: todo,
+          timestamp: new Date().toString(),
+          editable: false,
+          highlighted: false,
+        },
       };
       setTimelineEntries((prevEntries) => [...prevEntries, newEntry]); // Append new entry instead of prepending
       setShouldScrollToBottom(true); // Scroll to bottom when a new entry is added
@@ -490,10 +511,12 @@ const Timeline = ({ title, entries }) => {
       const newEntry = {
         id: uuidv4(),
         type: '',
-        content: habit,
-        timestamp: new Date().toString(),
-        editable: false,
-        highlighted: false,
+        properties: {
+          content: habit,
+          timestamp: new Date().toString(),
+          editable: false,
+          highlighted: false,
+        },
       };
       setTimelineEntries((prevEntries) => [...prevEntries, newEntry]); // Append new entry instead of prepending
       setShouldScrollToBottom(true); // Scroll to bottom when a new entry is added
@@ -693,12 +716,12 @@ const Timeline = ({ title, entries }) => {
           <div
             key={entry.id}
             className={`timeline-entry${
-              entry.highlighted ? ' highlighted' : ''
+              entry.properties?.highlighted ? ' highlighted' : ''
             }`}
           >
             <div
               className={`bullet-point${
-                entry.highlighted ? ' highlighted' : ''
+                entry.properties?.highlighted ? ' highlighted' : ''
               }`}
               onClick={() => handleBulletClick(entry.id)}
               role="button"
@@ -711,7 +734,7 @@ const Timeline = ({ title, entries }) => {
                 }
               }}
             ></div>
-            {entry.editable ? (
+            {entry.properties?.editable ? (
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -726,7 +749,7 @@ const Timeline = ({ title, entries }) => {
               >
                 <textarea
                   name="entry-textarea"
-                  defaultValue={entry.content}
+                  defaultValue={entry.properties?.content}
                   onChange={(e) => {
                     adjustTextareaHeight(entry.id);
                     editEntryFormElementRefs.current[entry.id].elements[
@@ -766,12 +789,12 @@ const Timeline = ({ title, entries }) => {
                 <div
                   dangerouslySetInnerHTML={{
                     __html: DOMPurify.sanitize(
-                      entry.content.replace(/\n/g, '<br />')
+                      entry.properties?.content.replace(/\n/g, '<br />')
                     ),
                   }}
                 ></div>
                 {showTimestamp && (
-                  <small>{formatTimestamp(entry.timestamp)}</small>
+                  <small>{formatTimestamp(entry.properties?.timestamp)}</small>
                 )}
                 {showEditOptions && (
                   <div className="entry-buttons">
