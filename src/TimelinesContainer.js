@@ -23,6 +23,9 @@ const simulateAPICall = (timeout) =>
             editable: false,
             highlighted: false,
             original_type: '',
+            created_at: '',
+            updated_at: '',
+            completed_at: '',
           },
         };
       });
@@ -44,6 +47,9 @@ const simulateLoadOlderEntries = (timeout) =>
           editable: false,
           highlighted: false,
           original_type: '',
+          created_at: '',
+          updated_at: '',
+          completed_at: '',
         },
       })).reverse();
       resolve(entries);
