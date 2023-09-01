@@ -26,6 +26,7 @@ const simulateAPICall = (timeout) =>
             created_at: '',
             updated_at: '',
             completed_at: '',
+            locked: false,
           },
         };
       });
@@ -50,6 +51,7 @@ const simulateLoadOlderEntries = (timeout) =>
           created_at: '',
           updated_at: '',
           completed_at: '',
+          locked: false,
         },
       })).reverse();
       resolve(entries);
