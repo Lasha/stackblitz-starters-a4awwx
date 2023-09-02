@@ -110,7 +110,8 @@
 
 .timeline-toggle-options {
   display: flex;
-  flex-direction: column; /* Stack the toggles vertically */
+  flex-direction: row; /* Stack the toggles vertically */
+  flex-wrap: wrap;
 }
 
 .timeline-search {
@@ -233,6 +234,14 @@
     rgba(255, 223, 0, 1),
     rgba(255, 223, 0, 0)
   ); */
+}
+
+.timeline-entry.locked::after {
+  content: '🔒';
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .timeline-entry form {

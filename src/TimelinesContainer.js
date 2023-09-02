@@ -291,9 +291,9 @@ const Timeline = ({ title, entries }) => {
     }
   };
 
-  const handleRefresh = async () => {
-    window.alert('Implement timeline entries refresh');
-  };
+  // const handleRefresh = async () => {
+  //   window.alert('Implement timeline entries refresh');
+  // };
 
   const handleToggleTimestamp = () => {
     setShowTimestamp((prevShowTimestamp) => !prevShowTimestamp);
@@ -428,6 +428,23 @@ const Timeline = ({ title, entries }) => {
         prevEntries.filter((entry) => entry.id !== id)
       );
     }
+  };
+
+  const handleLockEntryToggle = (entryId) => {
+    setShouldScrollToBottom(false);
+    setTimelineEntries((prevEntries) =>
+      prevEntries.map((entry) =>
+        entry.id === entryId
+          ? {
+              ...entry,
+              properties: {
+                ...entry.properties,
+                locked: !entry.properties.locked,
+              },
+            }
+          : entry
+      )
+    );
   };
 
   const handleBulletClick = (id) => {
@@ -688,7 +705,7 @@ const Timeline = ({ title, entries }) => {
                 checked={showTimestamp}
                 onChange={handleToggleTimestamp}
               />
-              Show Timestamp
+              Timestamp
             </label>
             <label>
               <input
@@ -696,7 +713,7 @@ const Timeline = ({ title, entries }) => {
                 checked={showEditOptions}
                 onChange={handleToggleEditOptions}
               />
-              Show Edit Options
+              Edit Options
             </label>
             <label>
               <input
@@ -704,7 +721,7 @@ const Timeline = ({ title, entries }) => {
                 checked={showTodos}
                 onChange={() => setShowTodos((prev) => !prev)}
               />
-              Show Todos
+              Todos
             </label>
             <label>
               <input
@@ -712,12 +729,12 @@ const Timeline = ({ title, entries }) => {
                 checked={showHabits}
                 onChange={() => setShowHabits((prev) => !prev)}
               />
-              Show Habits
+              Habits
             </label>
           </div>
-          <button onClick={handleRefresh} disabled={loading}>
+          {/* <button onClick={handleRefresh} disabled={loading}>
             Refresh
-          </button>
+          </button> */}
         </div>
       </div>
       <div className="timeline-search">
@@ -734,8 +751,8 @@ const Timeline = ({ title, entries }) => {
           <div
             key={entry.id}
             className={`timeline-entry${
-              entry.properties?.highlighted ? ' highlighted' : ''
-            }`}
+              entry.properties.highlighted ? ' highlighted' : ''
+            } ${entry.properties.locked ? 'locked' : ''}`}
           >
             <div
               className={`bullet-point${
@@ -823,15 +840,21 @@ const Timeline = ({ title, entries }) => {
                   <div className="entry-buttons">
                     <button
                       onClick={() => handleEditEntry(entry.id)}
-                      disabled={loading}
+                      disabled={loading || entry.properties.locked}
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handleDeleteEntry(entry.id)}
-                      disabled={loading}
+                      disabled={loading || entry.properties.locked}
                     >
                       Delete
+                    </button>
+                    <button
+                      onClick={() => handleLockEntryToggle(entry.id)}
+                      disabled={loading}
+                    >
+                      {entry.properties.locked ? 'Unlock' : 'Lock'}
                     </button>
                   </div>
                 )}
