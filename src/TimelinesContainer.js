@@ -674,6 +674,7 @@ const Timeline = ({ title, entries }) => {
         />
       )}
       <div className="timeline-header-container">
+        <div className="timeline-settings">Settings</div>
         <div className="timeline-header">
           {editingTitle ? (
             <form className="timeline-editing" onSubmit={handleSaveTitle}>

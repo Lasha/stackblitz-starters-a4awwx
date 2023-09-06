@@ -44,6 +44,24 @@
   padding: 10px 20px;
 }
 
+.timeline-settings {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 3px 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  font-size: 0.6rem;
+  background-color: rgb(107 114 128);
+  cursor: pointer;
+  color: #fff;
+  border-radius: 0 0 0 6px;
+}
+
+.timeline-settings:hover {
+  background-color: rgb(75 85 99);
+}
+
 .timeline-header {
   display: flex;
   align-items: center;
