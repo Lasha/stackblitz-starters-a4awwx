@@ -151,7 +151,11 @@ const Timeline = ({ title, entries }) => {
   const [todosExpanded, setTodosExpanded] = useState(
     !!Math.round(Math.random())
   );
-  const [todos, setTodos] = useState(['Task 1', 'Task 2', 'Task 3']); // Default todos to start with
+  const [todos, setTodos] = useState([
+    'Review pitch deck',
+    'Write blog post',
+    'Review PRs',
+  ]); // Default todos to start with
 
   // Define your state and ref here...
   const [entryValue, setEntryValue] = useState('');
