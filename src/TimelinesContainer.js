@@ -510,7 +510,7 @@ const Timeline = ({ title, entries }) => {
 
   // Function to add a new todo
   const handleAddTodo = () => {
-    const newTodo = prompt('Enter a new task:');
+    const newTodo = prompt('Create a new task:');
     if (newTodo) {
       setTodos((prevTodos) => [...prevTodos, newTodo]);
     }
@@ -518,7 +518,7 @@ const Timeline = ({ title, entries }) => {
 
   // Function to edit a todo
   const handleEditTodo = (todoIndex) => {
-    const updatedTodo = prompt('Edit the task:', todos[todoIndex]);
+    const updatedTodo = prompt('Edit task:', todos[todoIndex]);
     if (updatedTodo) {
       setTodos((prevTodos) =>
         prevTodos.map((todo, index) =>
@@ -576,7 +576,7 @@ const Timeline = ({ title, entries }) => {
 
   // Function to edit a habit
   const handleEditHabit = (habitIndex) => {
-    const updatedHabit = prompt('Edit the habit:', habits[habitIndex]);
+    const updatedHabit = prompt('Edit habit:', habits[habitIndex]);
     if (updatedHabit) {
       setHabits((prevHabits) =>
         prevHabits.map((habit, index) =>
